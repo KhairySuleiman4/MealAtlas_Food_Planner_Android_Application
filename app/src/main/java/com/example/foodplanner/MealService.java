@@ -5,5 +5,5 @@ import retrofit2.http.GET;
 
 public interface MealService {
     @GET("random.php")
-    Call<MealResponse> getMeals();
+    Call<MealResponse> getRandomMeal();
 }
