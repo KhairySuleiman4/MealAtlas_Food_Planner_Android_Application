@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +68,13 @@ public class MealOfTheDayFragment extends Fragment {
                                     .load(meals.get(0).getMealPhoto())
                                             .into(ivMealPhoto);
                     tvMealName.setText(meals.get(0).getMealName());
+                    ivMealPhoto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MealOfTheDayFragmentDirections.ActionMealOfTheDayFragmentToMealDetailsFragment action = MealOfTheDayFragmentDirections.actionMealOfTheDayFragmentToMealDetailsFragment(meals.get(0));
+                            Navigation.findNavController(view).navigate(action);
+                        }
+                    });
                 } else {
                     Log.i("TAG", "onResponse: " + response.message());
                 }

@@ -6,4 +6,9 @@
     <string name="str_view_all"><![CDATA[View all >]]></string>
     <string name="str_categories">Categories</string>
     <string name="str_countries">Countries</string>
+    <string name="str_meal_title">Title</string>
+    <string name="str_meal_category">Category</string>
+    <string name="str_meal_area">Area</string>
+    <string name="str_meal_instructions">Instructions</string>
+    <string name="str_text_view">TextView</string>
 </resources>
