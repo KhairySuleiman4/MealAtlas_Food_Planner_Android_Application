@@ -28,7 +28,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
     @Override
     public CategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_category, viewGroup, false);
+        View view = inflater.inflate(R.layout.card_item, viewGroup, false);
         CategoriesViewHolder holder = new CategoriesViewHolder(view);
         return holder;
     }
@@ -56,7 +56,7 @@ class CategoriesViewHolder extends RecyclerView.ViewHolder{
     public CategoriesViewHolder(@NonNull View itemView) {
         super(itemView);
         convertedView = itemView;
-        ivCateImage = itemView.findViewById(R.id.iv_category);
-        tvCateName = itemView.findViewById(R.id.tv_category);
+        ivCateImage = itemView.findViewById(R.id.iv_card_item);
+        tvCateName = itemView.findViewById(R.id.tv_card_item);
     }
 }

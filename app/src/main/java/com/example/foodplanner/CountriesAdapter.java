@@ -26,7 +26,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesViewHolder> 
     @Override
     public CountriesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_country, viewGroup, false);
+        View view = inflater.inflate(R.layout.card_item, viewGroup, false);
         CountriesViewHolder holder = new CountriesViewHolder(view);
         return holder;
     }
@@ -52,7 +52,7 @@ class CountriesViewHolder extends RecyclerView.ViewHolder{
     public CountriesViewHolder(@NonNull View itemView) {
         super(itemView);
         convertedView = itemView;
-        ivFlag = itemView.findViewById(R.id.iv_country);
-        tvName = itemView.findViewById(R.id.tv_country);
+        ivFlag = itemView.findViewById(R.id.iv_card_item);
+        tvName = itemView.findViewById(R.id.tv_card_item);
     }
 }
