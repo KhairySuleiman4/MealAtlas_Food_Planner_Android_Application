@@ -71,7 +71,8 @@ public class MealOfTheDayFragment extends Fragment {
                     ivMealPhoto.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            MealOfTheDayFragmentDirections.ActionMealOfTheDayFragmentToMealDetailsFragment action = MealOfTheDayFragmentDirections.actionMealOfTheDayFragmentToMealDetailsFragment(meals.get(0));
+                            MealOfTheDayFragmentDirections.ActionMealOfTheDayFragmentToMealDetailsFragment action =
+                                    MealOfTheDayFragmentDirections.actionMealOfTheDayFragmentToMealDetailsFragment(meals.get(0));
                             Navigation.findNavController(view).navigate(action);
                         }
                     });
