@@ -11,4 +11,5 @@
     <string name="str_meal_area">Area</string>
     <string name="str_meal_instructions">Instructions</string>
     <string name="str_text_view">TextView</string>
+    <string name="str_ingredients">Ingredients</string>
 </resources>
