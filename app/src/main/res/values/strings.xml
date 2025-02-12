@@ -12,4 +12,7 @@
     <string name="str_meal_instructions">Instructions</string>
     <string name="str_text_view">TextView</string>
     <string name="str_ingredients">Ingredients</string>
+    <string name="str_view_meal">View Meal</string>
+    <string name="str_desc">Discreption</string>
+    <string name="str_view"><![CDATA[View >]]></string>
 </resources>
