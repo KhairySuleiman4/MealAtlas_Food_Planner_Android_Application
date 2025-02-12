@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,11 @@ public class HomeScreenFragment extends Fragment {
     RecyclerView rvCates;
     RecyclerView rvCountries;
     ArrayList<Country> countries;
+
+    FloatingActionButton fabTrans, fabSearch, fabFav;
+    TextView tvSearch, tvFav;
+    Boolean isAllFabsVisible;
+
     public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
 
     public HomeScreenFragment() {
@@ -59,6 +65,42 @@ public class HomeScreenFragment extends Fragment {
         tvMealName = view.findViewById(R.id.tv_meal_of_the_day_title);
         rvCates = view.findViewById(R.id.rv_categories);
         rvCountries = view.findViewById(R.id.rv_countries);
+
+        fabTrans = view.findViewById(R.id.transition_fab);
+        fabSearch = view.findViewById(R.id.search_fab);
+        fabFav = view.findViewById(R.id.favorites_fab);
+        tvSearch = view.findViewById(R.id.search_action_text);
+        tvFav = view.findViewById(R.id.favorites_text);
+
+        fabSearch.setVisibility(View.GONE);
+        fabFav.setVisibility(View.GONE);
+        tvSearch.setVisibility(View.GONE);
+        tvFav.setVisibility(View.GONE);
+        isAllFabsVisible = false;
+        fabTrans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isAllFabsVisible) {
+                    fabSearch.show();
+                    fabFav.show();
+                    tvSearch.setVisibility(View.VISIBLE);
+                    tvFav.setVisibility(View.VISIBLE);
+                    isAllFabsVisible = true;
+                } else {
+                    fabSearch.hide();
+                    fabFav.hide();
+                    tvSearch.setVisibility(View.GONE);
+                    tvFav.setVisibility(View.GONE);
+                    isAllFabsVisible = false;
+                }
+            }
+        });
+        fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_homeScreenFragment_to_searchFragment2);
+            }
+        });
 
         countries = new ArrayList<>();
         cates = new ArrayList<>();
@@ -132,5 +174,6 @@ public class HomeScreenFragment extends Fragment {
         countries.add(new Country("Greece", R.drawable.greece));
         CountriesAdapter adapter = new CountriesAdapter(getContext(), countries);
         rvCountries.setAdapter(adapter);
+
     }
 }
