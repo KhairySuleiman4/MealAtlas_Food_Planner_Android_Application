@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.model;
 
 import java.util.ArrayList;
 

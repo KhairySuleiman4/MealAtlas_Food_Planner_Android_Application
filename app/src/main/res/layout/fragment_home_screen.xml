@@ -120,64 +120,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/transition_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/transition"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/search_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/transition_fab"
-        app:layout_constraintEnd_toEndOf="@+id/transition_fab"
-        app:layout_constraintStart_toStartOf="@+id/transition_fab"
-        app:srcCompat="@drawable/search" />
-
-    <TextView
-        android:id="@+id/search_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        android:text="Search for meals"
-        app:layout_constraintBottom_toBottomOf="@+id/search_fab"
-        app:layout_constraintEnd_toStartOf="@+id/search_fab"
-        app:layout_constraintTop_toTopOf="@+id/search_fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/favorites_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/search_fab"
-        app:layout_constraintEnd_toEndOf="@+id/search_fab"
-        app:layout_constraintStart_toStartOf="@+id/search_fab"
-        app:srcCompat="@drawable/heart" />
-
-    <TextView
-        android:id="@+id/favorites_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Favorite meals"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/favorites_fab"
-        app:layout_constraintEnd_toStartOf="@+id/favorites_fab"
-        app:layout_constraintTop_toTopOf="@+id/favorites_fab" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

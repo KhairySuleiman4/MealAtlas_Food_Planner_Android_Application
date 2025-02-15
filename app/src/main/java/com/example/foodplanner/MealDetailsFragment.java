@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.model.Meal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MealDetailsFragment extends Fragment {
 
