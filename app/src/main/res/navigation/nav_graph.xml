@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_meal_details" >
         <argument
             android:name="mealDetails"
-            app:argType="com.example.foodplanner.model.Meal" />
+            app:argType="com.example.foodplanner.model.pojos.Meal" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

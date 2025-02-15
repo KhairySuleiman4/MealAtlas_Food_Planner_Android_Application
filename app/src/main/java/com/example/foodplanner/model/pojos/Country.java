@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.model.pojos;
 
 public class Country {
     private String name;

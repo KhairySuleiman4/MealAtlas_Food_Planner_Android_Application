@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.model.pojos;
 
 import com.google.gson.annotations.SerializedName;
 

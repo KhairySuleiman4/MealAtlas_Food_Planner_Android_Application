@@ -1,4 +1,4 @@
-package com.example.foodplanner.model;
+package com.example.foodplanner.model.pojos;
 
 import java.util.ArrayList;
 

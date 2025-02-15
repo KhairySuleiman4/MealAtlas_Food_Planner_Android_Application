@@ -16,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.model.Meal;
-import com.example.foodplanner.model.MealResponse;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.foodplanner.model.network.CategoryService;
+import com.example.foodplanner.model.pojos.Country;
+import com.example.foodplanner.model.pojos.Meal;
+import com.example.foodplanner.model.pojos.MealResponse;
+import com.example.foodplanner.model.network.MealService;
+import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.model.pojos.CategoryResponse;
 
 import java.util.ArrayList;
 
