@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.model.Meal;
+import com.example.foodplanner.model.pojos.Meal;
 
 import java.util.ArrayList;
 

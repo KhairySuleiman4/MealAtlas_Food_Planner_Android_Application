@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
+import com.example.foodplanner.model.network.CategoryService;
+import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.model.pojos.CategoryResponse;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 

@@ -1,6 +1,6 @@
-package com.example.foodplanner;
+package com.example.foodplanner.model.network;
 
-import com.example.foodplanner.model.MealResponse;
+import com.example.foodplanner.model.pojos.MealResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

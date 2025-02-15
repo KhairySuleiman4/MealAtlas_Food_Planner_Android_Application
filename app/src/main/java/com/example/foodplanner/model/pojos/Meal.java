@@ -1,4 +1,4 @@
-package com.example.foodplanner.model;
+package com.example.foodplanner.model.pojos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
