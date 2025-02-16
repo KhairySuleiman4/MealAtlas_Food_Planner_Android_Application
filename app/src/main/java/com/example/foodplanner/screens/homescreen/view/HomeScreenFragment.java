@@ -22,6 +22,8 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.model.network.category.CategoriesRemoteDataSourceImp;
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryService;
+import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.model.pojos.MealResponse;
@@ -45,9 +47,8 @@ public class HomeScreenFragment extends Fragment implements HomeView {
 
     HomePresenter presenter;
     CategoriesAdapter categoriesAdapter;
-//    ImageView ivMealPhoto;
-//    TextView tvMealName;
-    //ArrayList <Meal> meals;
+    ImageView ivMealPhoto;
+    TextView tvMealName;
     RecyclerView rvCates;
     //RecyclerView rvCountries;
     //ArrayList<Country> countries;
@@ -73,75 +74,18 @@ public class HomeScreenFragment extends Fragment implements HomeView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        ivMealPhoto = view.findViewById(R.id.iv_meal_of_the_day);
-//        tvMealName = view.findViewById(R.id.tv_meal_of_the_day_title);
+        ivMealPhoto = view.findViewById(R.id.iv_meal_of_the_day);
+        tvMealName = view.findViewById(R.id.tv_meal_of_the_day_title);
         rvCates = view.findViewById(R.id.rv_categories);
         //rvCountries = view.findViewById(R.id.rv_countries);
         presenter = new HomePresenterImp(this,
-                CategoriesRepositoryImp.getInstance(
-                        CategoriesRemoteDataSourceImp.getInstance()));
+                CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
+                MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
         categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>());
         rvCates.setAdapter(categoriesAdapter);
         //countries = new ArrayList<>();
-        //cates = new ArrayList<>();
-        //meals = new ArrayList<>();
         presenter.getCategories();
-
-//        Retrofit instance = new Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-
-//        MealService ms = instance.create(MealService.class);
-//        Call<MealResponse> callRandom = ms.getRandomMeal();
-//        callRandom.enqueue(new Callback<MealResponse>() {
-//            @Override
-//            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-//                if(response.isSuccessful()){
-//                    MealResponse result = response.body();
-//                    meals = result.getMeals();
-//                    Meal rMeal = meals.get(0);
-//                    Glide.with(HomeScreenFragment.this)
-//                                    .load(rMeal.getMealPhoto())
-//                                            .into(ivMealPhoto);
-//                    tvMealName.setText(rMeal.getMealName());
-//                    ivMealPhoto.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-////                            HomeScreenFragmentDirections.ActionHomeScreenFragmentToMealDetailsFragment action =
-////                                    HomeScreenFragmentDirections.actionHomeScreenFragmentToMealDetailsFragment(rMeal);
-////                            Navigation.findNavController(view).navigate(action);
-//                        }
-//                    });
-//                } else {
-//                    Log.i("TAG", "onResponse: " + response.message());
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-//                throwable.printStackTrace();
-//            }
-//        });
-
-//        CategoryService cs = instance.create(CategoryService.class);
-//        Call<CategoryResponse> callCategory = cs.getCategories();
-//        callCategory.enqueue(new Callback<CategoryResponse>() {
-//            @Override
-//            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-//                if(response.isSuccessful()){
-//                    CategoryResponse result = response.body();
-//                    //cates = result.getCates();
-//                    //CategoriesAdapter adapter = new CategoriesAdapter(getContext(), cates);
-//                    //rvCates.setAdapter(adapter);
-//                } else {
-//                    Log.i("TAG", "onResponse: " + response.message());
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
-//                throwable.printStackTrace();
-//            }
-//        });
+        presenter.getRandomMeal();
 
 //        countries.add(new Country("USA", R.drawable.usa));
 //        countries.add(new Country("UK", R.drawable.uk));
@@ -162,6 +106,22 @@ public class HomeScreenFragment extends Fragment implements HomeView {
     public void showAllCategories(List<Category> categories) {
         categoriesAdapter.setCategories(categories);
         categoriesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showRandomMeal(Meal meal) {
+        Glide.with(HomeScreenFragment.this)
+                .load(meal.getMealPhoto())
+                .into(ivMealPhoto);
+        tvMealName.setText(meal.getMealName());
+        ivMealPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeScreenFragmentDirections.ActionHomeScreenFragmentToMealDetailsFragment action =
+                        HomeScreenFragmentDirections.actionHomeScreenFragmentToMealDetailsFragment(meal);
+                Navigation.findNavController(v).navigate(action);
+            }
+        });
     }
 
     @Override

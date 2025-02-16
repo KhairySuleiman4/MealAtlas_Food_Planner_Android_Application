@@ -33,14 +33,14 @@ public class MealsRemoteDataSourceImp implements MealsRemoteDataSource{
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 if(response.isSuccessful())
-                    mealNetworkCallBack.onSuccessResult(response.body().getMeals());
+                    mealNetworkCallBack.onSuccessRandomMealResult(response.body().getMeals());
                 else
-                    mealNetworkCallBack.onFailResult(response.message());
+                    mealNetworkCallBack.onFailRandomMealResult(response.message());
             }
 
             @Override
             public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                mealNetworkCallBack.onFailResult(throwable.getMessage());
+                mealNetworkCallBack.onFailRandomMealResult(throwable.getMessage());
                 throwable.printStackTrace();
             }
         });

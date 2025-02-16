@@ -5,6 +5,6 @@ import com.example.foodplanner.model.pojos.Meal;
 import java.util.List;
 
 public interface MealNetworkCallBack {
-    public void onSuccessResult(List<Meal> products);
-    public void onFailResult(String error);
+    void onSuccessRandomMealResult(List<Meal> products);
+    void onFailRandomMealResult(String error);
 }
