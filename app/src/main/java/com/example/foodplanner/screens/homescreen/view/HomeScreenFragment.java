@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens.homescreen;
+package com.example.foodplanner.screens.homescreen.view;
 
 import android.os.Bundle;
 
@@ -25,8 +25,12 @@ import com.example.foodplanner.model.pojos.MealResponse;
 import com.example.foodplanner.model.network.meal.MealService;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
+import com.example.foodplanner.screens.homescreen.presenter.HomePresenter;
+import com.example.foodplanner.screens.homescreen.presenter.HomePresenterImp;
+//import com.example.foodplanner.screens.homescreen.HomeScreenFragmentDirections;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,12 +38,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeScreenFragment extends Fragment {
+public class HomeScreenFragment extends Fragment implements HomeView {
 
+    HomePresenter presenter;
+    CategoriesAdapter categoriesAdapter;
     ImageView ivMealPhoto;
     TextView tvMealName;
     ArrayList <Meal> meals;
-    ArrayList<Category> cates;
     RecyclerView rvCates;
     RecyclerView rvCountries;
     ArrayList<Country> countries;
@@ -69,9 +74,9 @@ public class HomeScreenFragment extends Fragment {
         tvMealName = view.findViewById(R.id.tv_meal_of_the_day_title);
         rvCates = view.findViewById(R.id.rv_categories);
         rvCountries = view.findViewById(R.id.rv_countries);
-
+        //presenter = new HomePresenterImp(this, )
         countries = new ArrayList<>();
-        cates = new ArrayList<>();
+        //cates = new ArrayList<>();
         meals = new ArrayList<>();
 
         Retrofit instance = new Retrofit.Builder()
@@ -95,9 +100,9 @@ public class HomeScreenFragment extends Fragment {
                     ivMealPhoto.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            HomeScreenFragmentDirections.ActionHomeScreenFragmentToMealDetailsFragment action =
-                                    HomeScreenFragmentDirections.actionHomeScreenFragmentToMealDetailsFragment(rMeal);
-                            Navigation.findNavController(view).navigate(action);
+//                            HomeScreenFragmentDirections.ActionHomeScreenFragmentToMealDetailsFragment action =
+//                                    HomeScreenFragmentDirections.actionHomeScreenFragmentToMealDetailsFragment(rMeal);
+//                            Navigation.findNavController(view).navigate(action);
                         }
                     });
                 } else {
@@ -117,9 +122,9 @@ public class HomeScreenFragment extends Fragment {
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 if(response.isSuccessful()){
                     CategoryResponse result = response.body();
-                    cates = result.getCates();
-                    CategoriesAdapter adapter = new CategoriesAdapter(getContext(), cates);
-                    rvCates.setAdapter(adapter);
+                    //cates = result.getCates();
+                    //CategoriesAdapter adapter = new CategoriesAdapter(getContext(), cates);
+                    //rvCates.setAdapter(adapter);
                 } else {
                     Log.i("TAG", "onResponse: " + response.message());
                 }
@@ -142,6 +147,16 @@ public class HomeScreenFragment extends Fragment {
         countries.add(new Country("Greece", R.drawable.greece));
         CountriesAdapter adapter = new CountriesAdapter(getContext(), countries);
         rvCountries.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void showAllCategories(List<Category> categories) {
+
+    }
+
+    @Override
+    public void showError(String error) {
 
     }
 }

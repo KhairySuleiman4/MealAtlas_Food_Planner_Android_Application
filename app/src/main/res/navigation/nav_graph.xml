@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="com.example.foodplanner.screens.homescreen.HomeScreenFragment"
+        android:name="com.example.foodplanner.screens.homescreen.view.HomeScreenFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_screen">
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragment"
+        android:name="com.example.foodplanner.screens.mealdetailsscreen.view.MealDetailsFragment"
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details" >
         <argument

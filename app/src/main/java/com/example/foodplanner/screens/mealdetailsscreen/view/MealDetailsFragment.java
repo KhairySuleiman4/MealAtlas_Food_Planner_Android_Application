@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens.mealdetailsscreen;
+package com.example.foodplanner.screens.mealdetailsscreen.view;
 
 import android.os.Bundle;
 
@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 //import com.example.foodplanner.MealDetailsFragmentArgs;
+import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Meal;
+import com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragmentArgs;
 
 import java.util.ArrayList;
 
@@ -59,20 +61,20 @@ public class MealDetailsFragment extends Fragment {
         tvInst = view.findViewById(R.id.tv_meal_inst);
         rvMealIngredients = view.findViewById(R.id.rv_meal_ingredients);
 
-//        Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
-//        storeIngredients(meal);
-//        MealIngredientsAdapter adapter = new MealIngredientsAdapter(getContext(), ingredients, measures);
-//        Glide.with(MealDetailsFragment.this)
-//                .load(meal.getMealPhoto())
-//                .into(ivMealPhoto);
-//        tvMealTitle.setText(meal.getMealName());
-//        tvMealCate.setText(meal.getMealCate());
-//        tvMealArea.setText(meal.getMealArea());
-//        tvInst.setText(meal.getMealInst());
+        Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
+        storeIngredients(meal);
+        MealIngredientsAdapter adapter = new MealIngredientsAdapter(getContext(), ingredients, measures);
+        Glide.with(MealDetailsFragment.this)
+                .load(meal.getMealPhoto())
+                .into(ivMealPhoto);
+        tvMealTitle.setText(meal.getMealName());
+        tvMealCate.setText(meal.getMealCate());
+        tvMealArea.setText(meal.getMealArea());
+        tvInst.setText(meal.getMealInst());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvMealIngredients.setLayoutManager(layoutManager);
-        //rvMealIngredients.setAdapter(adapter);
+        rvMealIngredients.setAdapter(adapter);
 
 
     }
