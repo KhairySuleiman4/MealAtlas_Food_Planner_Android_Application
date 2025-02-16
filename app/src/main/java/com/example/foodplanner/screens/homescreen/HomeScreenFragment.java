@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.homescreen;
 
 import android.os.Bundle;
 
@@ -16,11 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodplanner.model.network.CategoryService;
+//import com.example.foodplanner.HomeScreenFragmentDirections;
+import com.example.foodplanner.R;
+import com.example.foodplanner.model.network.category.CategoryService;
 import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.model.pojos.MealResponse;
-import com.example.foodplanner.model.network.MealService;
+import com.example.foodplanner.model.network.meal.MealService;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
 

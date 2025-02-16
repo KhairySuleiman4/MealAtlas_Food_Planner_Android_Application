@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.mealdetailsscreen;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodplanner.R;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredientsViewHolder> {
     private Context context;

@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.homescreen;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
 
 import java.util.ArrayList;

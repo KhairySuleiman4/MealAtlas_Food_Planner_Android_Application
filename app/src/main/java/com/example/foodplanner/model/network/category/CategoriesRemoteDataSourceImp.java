@@ -1,7 +1,7 @@
-package com.example.foodplanner.model.network;
+package com.example.foodplanner.model.network.category;
 
+import com.example.foodplanner.model.network.meal.MealNetworkCallBack;
 import com.example.foodplanner.model.pojos.CategoryResponse;
-import com.example.foodplanner.model.pojos.MealResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,17 +28,21 @@ public class CategoriesRemoteDataSourceImp implements CategoriesRemoteDataSource
     }
 
     @Override
-    public void categoryNetworkCall(NetworkCallBack networkCallBack) {
+    public void categoryNetworkCall(CategoryNetworkCallBack categoryNetworkCallBack) {
         Call<CategoryResponse> call = categoryService.getCategories();
         call.enqueue(new Callback<CategoryResponse>() {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-
+                if(response.isSuccessful())
+                    categoryNetworkCallBack.onSuccessResult(response.body().getCates());
+                else
+                    categoryNetworkCallBack.onFailResult(response.message());
             }
 
             @Override
             public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
-
+                categoryNetworkCallBack.onFailResult(throwable.getMessage());
+                throwable.printStackTrace();
             }
         });
     }

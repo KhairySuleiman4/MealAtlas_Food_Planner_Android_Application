@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.searchscreen.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,17 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FilterAdapter extends RecyclerView.Adapter<FilterViewHolder> {
 
     private Context context;
 
-    ArrayList<Category> categories;
+    List<Category> categories;
 
-    public FilterAdapter(Context context, ArrayList<Category> categories) {
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public FilterAdapter(Context context, List<Category> categories) {
         this.context = context;
         this.categories = categories;
     }

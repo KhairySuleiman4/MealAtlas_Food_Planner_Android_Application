@@ -1,4 +1,4 @@
-package com.example.foodplanner.model.network;
+package com.example.foodplanner.model.network.category;
 
 import com.example.foodplanner.model.pojos.CategoryResponse;
 

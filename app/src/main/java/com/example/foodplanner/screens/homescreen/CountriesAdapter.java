@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.homescreen;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Country;
 
 import java.util.ArrayList;
