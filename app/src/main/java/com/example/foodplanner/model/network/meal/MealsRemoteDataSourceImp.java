@@ -1,4 +1,4 @@
-package com.example.foodplanner.model.network;
+package com.example.foodplanner.model.network.meal;
 
 import com.example.foodplanner.model.pojos.MealResponse;
 
@@ -27,17 +27,20 @@ public class MealsRemoteDataSourceImp implements MealsRemoteDataSource{
     }
 
     @Override
-    public void mealNetworkCall(NetworkCallBack networkCallBack) {
+    public void mealNetworkCall(MealNetworkCallBack mealNetworkCallBack) {
         Call<MealResponse> call = mealService.getRandomMeal();
         call.enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                networkCallBack.onSuccessResult(response.body().getMeals());
+                if(response.isSuccessful())
+                    mealNetworkCallBack.onSuccessRandomMealResult(response.body().getMeals());
+                else
+                    mealNetworkCallBack.onFailRandomMealResult(response.message());
             }
 
             @Override
             public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                networkCallBack.onFailResult(throwable.getMessage());
+                mealNetworkCallBack.onFailRandomMealResult(throwable.getMessage());
                 throwable.printStackTrace();
             }
         });

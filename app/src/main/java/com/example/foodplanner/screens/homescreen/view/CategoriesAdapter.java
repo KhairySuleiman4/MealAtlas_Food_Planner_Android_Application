@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.homescreen.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,18 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder> {
 
     private Context context;
-    private ArrayList<Category> cates;
+    private List<Category> categories;
 
-    public CategoriesAdapter(Context context, ArrayList<Category> cates) {
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public CategoriesAdapter(Context context, List<Category> categories) {
         this.context = context;
-        this.cates = cates;
+        this.categories = categories;
     }
 
     @NonNull
@@ -37,14 +43,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder holder, int i) {
         Glide.with(context)
-                .load(cates.get(i).getCateImage())
+                .load(categories.get(i).getCateImage())
                 .into(holder.ivCateImage);
-        holder.tvCateName.setText(cates.get(i).getCateName());
+        holder.tvCateName.setText(categories.get(i).getCateName());
     }
 
     @Override
     public int getItemCount() {
-        return cates.size();
+        return categories.size();
     }
 }
 

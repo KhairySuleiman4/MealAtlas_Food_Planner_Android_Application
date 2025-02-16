@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.searchscreen.view;
 
 import android.os.Bundle;
 
@@ -13,13 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodplanner.model.network.CategoryService;
+import com.example.foodplanner.R;
+import com.example.foodplanner.model.network.category.CategoriesRemoteDataSourceImp;
+import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
+import com.example.foodplanner.model.network.category.CategoryService;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
+import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenter;
+import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenterImp;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,13 +33,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchView {
 
     ChipGroup chipGroup;
     Chip cateChip;
     RecyclerView rvFilter;
-    ArrayList<Category> cates;
-    public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
+    SearchPresenter presenter;
+    FilterAdapter adapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -55,42 +61,32 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cates = new ArrayList<>();
         chipGroup = view.findViewById(R.id.chip_group_filters);
         rvFilter = view.findViewById(R.id.rv_filter);
         cateChip = view.findViewById(R.id.chip_categories);
         chipGroup.setSingleSelection(true);
-        Retrofit instance = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+        presenter = new SearchPresenterImp(this,
+                CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()));
+        adapter = new FilterAdapter(getContext(), new ArrayList<>());
+        rvFilter.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvFilter.setAdapter(adapter);
         cateChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryService cs = instance.create(CategoryService.class);
-                Call<CategoryResponse> callCategory = cs.getCategories();
-                callCategory.enqueue(new Callback<CategoryResponse>() {
-                    @Override
-                    public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-                        if(response.isSuccessful()){
-                            CategoryResponse result = response.body();
-                            cates = result.getCates();
-                            FilterAdapter adapter = new FilterAdapter(getContext(), cates);
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            rvFilter.setLayoutManager(layoutManager);
-                            rvFilter.setAdapter(adapter);
-                        } else {
-                            Log.i("TAG", "onResponse: " + response.message());
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
-                });
+                presenter.getCategories();
             }
         });
-
-        }
     }
+
+    @Override
+    public void showAllCategories(List<Category> categories) {
+        adapter.setCategories(categories);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+}

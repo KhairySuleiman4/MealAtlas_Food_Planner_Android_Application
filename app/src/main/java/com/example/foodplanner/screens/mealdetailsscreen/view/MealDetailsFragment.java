@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.mealdetailsscreen.view;
 
 import android.os.Bundle;
 
@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+//import com.example.foodplanner.MealDetailsFragmentArgs;
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Meal;
+//import com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragmentArgs;
 
 import java.util.ArrayList;
 

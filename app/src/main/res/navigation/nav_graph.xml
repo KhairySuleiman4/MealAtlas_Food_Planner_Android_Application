@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.foodplanner.SplashScreenFragment"
+        android:name="com.example.foodplanner.screens.splashscreen.SplashScreenFragment"
         android:label="SplashScreenFragment" >
         <action
             android:id="@+id/action_splashScreenFragment_to_mealOfTheDayFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="com.example.foodplanner.HomeScreenFragment"
+        android:name="com.example.foodplanner.screens.homescreen.view.HomeScreenFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_screen">
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="com.example.foodplanner.MealDetailsFragment"
+        android:name="com.example.foodplanner.screens.mealdetailsscreen.view.MealDetailsFragment"
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details" >
         <argument
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.foodplanner.SearchFragment"
+        android:name="com.example.foodplanner.screens.searchscreen.view.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search" />
 </navigation>
