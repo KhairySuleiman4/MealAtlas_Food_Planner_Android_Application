@@ -21,7 +21,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterViewHolder> {
 
     private Context context;
 
-    List<Category> categories;
+    private List<Category> categories;
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;

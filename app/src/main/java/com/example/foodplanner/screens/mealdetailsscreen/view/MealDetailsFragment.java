@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Meal;
-import com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragmentArgs;
+//import com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragmentArgs;
 
 import java.util.ArrayList;
 
