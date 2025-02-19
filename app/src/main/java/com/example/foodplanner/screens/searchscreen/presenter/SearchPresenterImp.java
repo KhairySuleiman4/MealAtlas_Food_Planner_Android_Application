@@ -2,6 +2,7 @@ package com.example.foodplanner.screens.searchscreen.presenter;
 
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryNetworkCallBack;
+import com.example.foodplanner.model.network.country.CountriesRepositoryImp;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.screens.searchscreen.view.SearchView;
 
@@ -19,6 +20,11 @@ public class SearchPresenterImp implements SearchPresenter, CategoryNetworkCallB
     @Override
     public void getCategories() {
         repo.categoryNetworkCall(this);
+    }
+
+    @Override
+    public void getCountries() {
+        view.showAllCountries(CountriesRepositoryImp.getCountries());
     }
 
     @Override

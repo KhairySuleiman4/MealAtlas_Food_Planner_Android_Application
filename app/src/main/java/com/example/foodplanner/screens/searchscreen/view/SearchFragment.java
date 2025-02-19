@@ -19,6 +19,9 @@ import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryService;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
+import com.example.foodplanner.model.pojos.Country;
+import com.example.foodplanner.screens.homescreen.view.CategoriesAdapter;
+import com.example.foodplanner.screens.homescreen.view.CountriesAdapter;
 import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenter;
 import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenterImp;
 import com.google.android.material.chip.Chip;
@@ -37,9 +40,12 @@ public class SearchFragment extends Fragment implements SearchView {
 
     ChipGroup chipGroup;
     Chip cateChip;
+    Chip countryChip;
     RecyclerView rvFilter;
+    CategoriesFilterAdapter categoriesAdapter;
+    CountriesFilterAdapter countriesAdapter;
     SearchPresenter presenter;
-    FilterAdapter adapter;
+    //FilterAdapter adapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -64,24 +70,42 @@ public class SearchFragment extends Fragment implements SearchView {
         chipGroup = view.findViewById(R.id.chip_group_filters);
         rvFilter = view.findViewById(R.id.rv_filter);
         cateChip = view.findViewById(R.id.chip_categories);
+        countryChip = view.findViewById(R.id.chip_areas);
         chipGroup.setSingleSelection(true);
         presenter = new SearchPresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()));
-        adapter = new FilterAdapter(getContext(), new ArrayList<>());
-        rvFilter.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvFilter.setAdapter(adapter);
+        categoriesAdapter = new CategoriesFilterAdapter(getContext(), new ArrayList<>());
+        countriesAdapter = new CountriesFilterAdapter(getContext(), new ArrayList<>());
+        //adapter = new FilterAdapter(getContext(), new ArrayList<>(), new ArrayList<>());
+        //rvFilter.setLayoutManager(new LinearLayoutManager(getContext()));
+        //rvFilter.setAdapter(adapter);
         cateChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                rvFilter.setAdapter(categoriesAdapter);
                 presenter.getCategories();
             }
         });
+        countryChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rvFilter.setAdapter(countriesAdapter);
+                presenter.getCountries();
+            }
+        });
+
     }
 
     @Override
     public void showAllCategories(List<Category> categories) {
-        adapter.setCategories(categories);
-        adapter.notifyDataSetChanged();
+        categoriesAdapter.setCategories(categories);
+        categoriesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAllCountries(List<Country> countries) {
+        countriesAdapter.setCountries(countries);
+        countriesAdapter.notifyDataSetChanged();
     }
 
     @Override
