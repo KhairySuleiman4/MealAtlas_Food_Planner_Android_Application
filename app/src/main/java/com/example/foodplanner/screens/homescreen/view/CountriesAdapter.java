@@ -14,14 +14,19 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Country;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesViewHolder> {
 
     private Context context;
-    private ArrayList<Country> countries;
+    private List<Country> countries;
 
-    public CountriesAdapter(Context context, ArrayList<Country> countries) {
+    public CountriesAdapter(Context context, List<Country> countries) {
         this.context = context;
+        this.countries = countries;
+    }
+
+    public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
 

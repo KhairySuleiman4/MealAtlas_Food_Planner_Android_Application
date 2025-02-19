@@ -3,12 +3,15 @@ package com.example.foodplanner.screens.homescreen.presenter;
 //import com.example.foodplanner.model.network.category.CategoriesRepository;
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryNetworkCallBack;
+import com.example.foodplanner.model.network.country.CountriesRepositoryImp;
 import com.example.foodplanner.model.network.meal.MealNetworkCallBack;
 import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.screens.homescreen.view.HomeView;
 
+import java.util.Collections;
 import java.util.List;
 
 public class HomePresenterImp implements HomePresenter, CategoryNetworkCallBack, MealNetworkCallBack {
@@ -30,6 +33,11 @@ public class HomePresenterImp implements HomePresenter, CategoryNetworkCallBack,
     @Override
     public void getRandomMeal() {
         mealsRepo.mealNetworkCall(this);
+    }
+
+    @Override
+    public void getCountries() {
+        view.showAllCountries(CountriesRepositoryImp.getCountries());
     }
 
     @Override
