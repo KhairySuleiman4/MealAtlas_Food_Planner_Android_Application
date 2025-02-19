@@ -47,13 +47,11 @@ public class HomeScreenFragment extends Fragment implements HomeView {
 
     HomePresenter presenter;
     CategoriesAdapter categoriesAdapter;
+    CountriesAdapter countriesAdapter;
     ImageView ivMealPhoto;
     TextView tvMealName;
     RecyclerView rvCates;
-    //RecyclerView rvCountries;
-    //ArrayList<Country> countries;
-
-    //public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
+    RecyclerView rvCountries;
 
     public HomeScreenFragment() {
         // Required empty public constructor
@@ -77,28 +75,47 @@ public class HomeScreenFragment extends Fragment implements HomeView {
         ivMealPhoto = view.findViewById(R.id.iv_meal_of_the_day);
         tvMealName = view.findViewById(R.id.tv_meal_of_the_day_title);
         rvCates = view.findViewById(R.id.rv_categories);
-        //rvCountries = view.findViewById(R.id.rv_countries);
+        rvCountries = view.findViewById(R.id.rv_countries);
         presenter = new HomePresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
                 MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
         categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>());
+        countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>());
         rvCates.setAdapter(categoriesAdapter);
-        //countries = new ArrayList<>();
+        rvCountries.setAdapter(countriesAdapter);
         presenter.getCategories();
         presenter.getRandomMeal();
+        presenter.getCountries();
 
-//        countries.add(new Country("USA", R.drawable.usa));
-//        countries.add(new Country("UK", R.drawable.uk));
-//        countries.add(new Country("Canada", R.drawable.canada));
-//        countries.add(new Country("China", R.drawable.china));
-//        countries.add(new Country("Croatia", R.drawable.croatia));
-//        countries.add(new Country("Netherlands", R.drawable.netherlands));
-//        countries.add(new Country("Egypt", R.drawable.egypt));
-//        countries.add(new Country("Philippines", R.drawable.philippines));
-//        countries.add(new Country("France", R.drawable.france));
-//        countries.add(new Country("Greece", R.drawable.greece));
-//        CountriesAdapter adapter = new CountriesAdapter(getContext(), countries);
-//        rvCountries.setAdapter(adapter);
+//        countries.add(new Country("American", R.drawable.american));
+//        countries.add(new Country("British", R.drawable.british));
+//        countries.add(new Country("Canadian", R.drawable.canadian));
+//        countries.add(new Country("Chinese", R.drawable.chinese));
+//        countries.add(new Country("Croatian", R.drawable.croatian));
+//        countries.add(new Country("Dutch", R.drawable.dutch));
+//        countries.add(new Country("Egyptian", R.drawable.egyptian));
+//        countries.add(new Country("Filipino", R.drawable.filipino));
+//        countries.add(new Country("French", R.drawable.french));
+//        countries.add(new Country("Greek", R.drawable.greek));
+//        countries.add(new Country("Indian", R.drawable.indian));
+//        countries.add(new Country("Irish", R.drawable.irish));
+//        countries.add(new Country("Italian", R.drawable.italian));
+//        countries.add(new Country("Jamaican", R.drawable.jamaican));
+//        countries.add(new Country("Japanese", R.drawable.japanese));
+//        countries.add(new Country("Kenyan", R.drawable.kenyan));
+//        countries.add(new Country("Malaysian", R.drawable.malaysian));
+//        countries.add(new Country("mexican", R.drawable.mexican));
+//        countries.add(new Country("Moroccan", R.drawable.moroccan));
+//        countries.add(new Country("Polish", R.drawable.polish));
+//        countries.add(new Country("Portuguese", R.drawable.portuguese));
+//        countries.add(new Country("Russian", R.drawable.russian));
+//        countries.add(new Country("Spanish", R.drawable.spanish));
+//        countries.add(new Country("Thai", R.drawable.thai));
+//        countries.add(new Country("Tunisian", R.drawable.tunisian));
+//        countries.add(new Country("Turkish", R.drawable.turkish));
+//        countries.add(new Country("Ukrainian", R.drawable.ukrainian));
+//        countries.add(new Country("Uruguayan", R.drawable.uruguayan));
+//        countries.add(new Country("Vietnamese", R.drawable.vietnamese));
 
     }
 
@@ -122,6 +139,12 @@ public class HomeScreenFragment extends Fragment implements HomeView {
                 Navigation.findNavController(v).navigate(action);
             }
         });
+    }
+
+    @Override
+    public void showAllCountries(List<Country> countries) {
+        countriesAdapter.setCountries(countries);
+        countriesAdapter.notifyDataSetChanged();
     }
 
     @Override

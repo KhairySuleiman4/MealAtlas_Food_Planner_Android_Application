@@ -76,6 +76,7 @@ public class MealDetailsFragment extends Fragment {
         tvMealArea.setText(meal.getMealArea());
         tvInst.setText(meal.getMealInst());
         rvMealIngredients.setAdapter(adapter);
+
         String videoId = meal.getStrYoutube().split("v=")[1];
         String embedUrl = "https://www.youtube.com/embed/" + videoId;
 
