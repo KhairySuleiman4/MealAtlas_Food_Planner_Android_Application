@@ -10,57 +10,51 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.model.pojos.Country;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class FilterAdapter extends RecyclerView.Adapter<FilterViewHolder> {
-
+public class CountriesFilterAdapter extends RecyclerView.Adapter<CountriesFilterViewHolder> {
     private Context context;
+    private List<Country> countries;
 
-    private List<Category> categories;
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
     }
 
-    public FilterAdapter(Context context, List<Category> categories) {
+    public CountriesFilterAdapter(Context context, List<Country> countries) {
         this.context = context;
-        this.categories = categories;
+        this.countries = countries;
     }
 
     @NonNull
     @Override
-    public FilterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public CountriesFilterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_filter, viewGroup, false);
-        FilterViewHolder holder = new FilterViewHolder(view);
+        CountriesFilterViewHolder holder = new CountriesFilterViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FilterViewHolder holder, int i) {
-        Glide.with(context)
-                .load(categories.get(i).getCateImage())
-                .into(holder.ivFilter);
-        holder.tvFilter.setText(categories.get(i).getCateName());
+    public void onBindViewHolder(@NonNull CountriesFilterViewHolder holder, int i) {
+        holder.ivFilter.setImageResource(countries.get(i).getFlag());
+        holder.tvFilter.setText(countries.get(i).getName());
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return countries.size();
     }
 }
 
-class FilterViewHolder extends RecyclerView.ViewHolder{
-
+class CountriesFilterViewHolder extends RecyclerView.ViewHolder{
     View convertedView;
     ImageView ivFilter;
     TextView tvFilter;
-    public FilterViewHolder(@NonNull View itemView) {
+    public CountriesFilterViewHolder(@NonNull View itemView) {
         super(itemView);
         convertedView = itemView;
         ivFilter = itemView.findViewById(R.id.iv_item_filter);
