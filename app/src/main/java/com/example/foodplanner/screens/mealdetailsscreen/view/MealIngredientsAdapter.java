@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredients
 
     @Override
     public void onBindViewHolder(@NonNull MealIngredientsViewHolder holder, int i) {
+        Glide.with(context)
+                .load("https://www.themealdb.com/images/ingredients/" + ingriedents.get(i) + ".png")
+                .into(holder.ivIngredient);
         holder.tvMeasure.setText(measures.get(i));
         holder.tvIngredient.setText(ingriedents.get(i));
     }

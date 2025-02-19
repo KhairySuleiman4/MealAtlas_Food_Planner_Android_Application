@@ -18,6 +18,7 @@ public class Meal implements Parcelable {
     private String mealArea;
     @SerializedName("strInstructions")
     private String mealInst;
+    private String strYoutube;
 
     @SerializedName("strIngredient1") private String mealIng1;
     @SerializedName("strIngredient2") private String mealIng2;
@@ -62,6 +63,7 @@ public class Meal implements Parcelable {
     @SerializedName("strMeasure20") private String mealMeas20;
 
     public Meal(String mealName, String mealPhoto, String mealCate, String mealArea, String mealInst,
+                String strYoutube,
                 String mealIng1, String mealIng2, String mealIng3, String mealIng4, String mealIng5,
                 String mealIng6, String mealIng7, String mealIng8, String mealIng9, String mealIng10,
                 String mealIng11, String mealIng12, String mealIng13, String mealIng14, String mealIng15,
@@ -76,6 +78,7 @@ public class Meal implements Parcelable {
         this.mealCate = mealCate;
         this.mealArea = mealArea;
         this.mealInst = mealInst;
+        this.strYoutube = strYoutube;
 
         this.mealIng1 = mealIng1;
         this.mealIng2 = mealIng2;
@@ -126,6 +129,7 @@ public class Meal implements Parcelable {
         mealCate = in.readString();
         mealArea = in.readString();
         mealInst = in.readString();
+        strYoutube = in.readString();
 
         mealIng1 = in.readString();
         mealIng2 = in.readString();
@@ -177,6 +181,7 @@ public class Meal implements Parcelable {
         dest.writeString(mealCate);
         dest.writeString(mealArea);
         dest.writeString(mealInst);
+        dest.writeString(strYoutube);
 
         dest.writeString(mealIng1);
         dest.writeString(mealIng2);
@@ -240,6 +245,14 @@ public class Meal implements Parcelable {
 
     public String getMealName() {
         return mealName;
+    }
+
+    public String getStrYoutube() {
+        return strYoutube;
+    }
+
+    public void setStrYoutube(String strYoutube) {
+        this.strYoutube = strYoutube;
     }
 
     public void setMealName(String mealName) {
