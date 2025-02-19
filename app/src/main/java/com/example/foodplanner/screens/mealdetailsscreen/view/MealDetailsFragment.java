@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ public class MealDetailsFragment extends Fragment {
     ArrayList<String> ingredients;
     ArrayList<String> measures;
     RecyclerView rvMealIngredients;
+    WebView wvYoutube;
 
     public MealDetailsFragment() {
         // Required empty public constructor
@@ -60,6 +63,7 @@ public class MealDetailsFragment extends Fragment {
         tvMealArea = view.findViewById(R.id.tv_meal_area);
         tvInst = view.findViewById(R.id.tv_meal_inst);
         rvMealIngredients = view.findViewById(R.id.rv_meal_ingredients);
+        wvYoutube = view.findViewById(R.id.wv_youtube);
 
         Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
         storeIngredients(meal);
@@ -71,11 +75,17 @@ public class MealDetailsFragment extends Fragment {
         tvMealCate.setText(meal.getMealCate());
         tvMealArea.setText(meal.getMealArea());
         tvInst.setText(meal.getMealInst());
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvMealIngredients.setLayoutManager(layoutManager);
         rvMealIngredients.setAdapter(adapter);
+        String videoId = meal.getStrYoutube().split("v=")[1];
+        String embedUrl = "https://www.youtube.com/embed/" + videoId;
 
+        wvYoutube.getSettings().setJavaScriptEnabled(true);
+        wvYoutube.getSettings().setDomStorageEnabled(true);
+        wvYoutube.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        wvYoutube.setWebViewClient(new WebViewClient());
+        String iframeHtml = "<html><body><iframe width=\"100%\" height=\"100%\" " +
+                "src=\"" + embedUrl + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+        wvYoutube.loadData(iframeHtml, "text/html", "utf-8");
 
     }
 

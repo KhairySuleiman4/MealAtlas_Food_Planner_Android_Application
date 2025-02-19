@@ -45,28 +45,20 @@
 
                 <TextView
                     android:id="@+id/tv_meal_of_the_day_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/str_text_view"
                     android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@id/iv_meal_of_the_day"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_view_details"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_view_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/str_view_meal"
-                    android:background="@drawable/ripple"
-                    android:textColor="@color/grey"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_meal_of_the_day_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_meal_of_the_day_title"
-                    app:layout_constraintTop_toTopOf="@+id/tv_meal_of_the_day_title" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_meal_of_the_day" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
