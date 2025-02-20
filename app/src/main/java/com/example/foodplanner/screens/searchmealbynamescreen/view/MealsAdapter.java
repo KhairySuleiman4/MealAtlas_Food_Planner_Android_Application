@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Meal;
-import com.example.foodplanner.screens.homescreen.view.HomeScreenFragment;
 //import com.example.foodplanner.screens.searchscreen.view.IngredientsFilterViewHolder;
 
 public class MealsAdapter extends RecyclerView.Adapter<MealsViewHolder> {
     private Context context;
     private Meal[] meals;
+    private OnMealClickListener listener;
 
-    public MealsAdapter(Context context, Meal[] meals) {
+    public MealsAdapter(Context context, Meal[] meals, OnMealClickListener listener) {
         this.context = context;
         this.meals = meals;
+        this.listener = listener;
     }
 
     @NonNull
@@ -33,10 +34,17 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MealsViewHolder holder, int i) {
+        String mealName = meals[i].getMealName();
         Glide.with(context)
                 .load(meals[i].getMealPhoto())
                 .into(holder.ivMealPhoto);
-        holder.tvMealName.setText(meals[i].getMealName());
+        holder.tvMealName.setText(mealName);
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onMealClick(mealName);
+            }
+        });
     }
 
     @Override
@@ -46,10 +54,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsViewHolder> {
 }
 
 class MealsViewHolder extends RecyclerView.ViewHolder{
+    View convertedView;
     TextView tvMealName;
     ImageView ivMealPhoto;
     public MealsViewHolder(@NonNull View itemView) {
         super(itemView);
+        convertedView = itemView;
         tvMealName = itemView.findViewById(R.id.tv_item_filter_title);
         ivMealPhoto = itemView.findViewById(R.id.iv_item_filter);
 

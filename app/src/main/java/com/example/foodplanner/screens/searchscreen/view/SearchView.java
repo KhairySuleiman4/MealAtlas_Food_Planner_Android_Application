@@ -9,5 +9,8 @@ public interface SearchView {
     void showAllCategories(List<Category> categories);
     void showAllCountries(List<Country> countries);
     void showAllIngredients(List<String> ingredients);
+    void updateCategoriesResults(List<Category> categories);
+    void updateCountriesResults(List<Country> countries);
+    void updateIngredientsResults(List<String> ingredients);
     void showError(String error);
 }

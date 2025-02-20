@@ -1,6 +1,9 @@
 package com.example.foodplanner.screens.searchscreen.presenter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.navigation.Navigation;
 
@@ -8,15 +11,20 @@ import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.country.CountriesRepositoryImp;
 import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.screens.homescreen.view.HomeScreenFragmentDirections;
 import com.example.foodplanner.screens.searchscreen.view.SearchFragmentDirections;
 import com.example.foodplanner.screens.searchscreen.view.SearchView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -25,6 +33,8 @@ public class SearchPresenterImp implements SearchPresenter {
     SearchView view;
     CategoriesRepositoryImp categoriesRepo;
     MealsRepositoryImp mealsRepo;
+    private TextWatcher currentTextWatcher;
+
     CompositeDisposable disposable;
 
     public SearchPresenterImp(SearchView view, CategoriesRepositoryImp categoriesRepo, MealsRepositoryImp mealsRepo) {
@@ -141,4 +151,62 @@ public class SearchPresenterImp implements SearchPresenter {
         //disposable.dispose();
     }
 
+    @Override
+    public void observeCategorySearch(EditText etSearch, List<Category> categories) {
+        setSearchObserver(etSearch, categories, query -> {
+            List<Category> filteredList = categories.stream()
+                    .filter(category -> category.getCateName().toLowerCase().contains(query))
+                    .collect(Collectors.toList());
+            view.updateCategoriesResults(filteredList);
+        });
+        //disposable.dispose();
+    }
+
+    @Override
+    public void observeCountrySearch(EditText etSearch, List<Country> countries) {
+        setSearchObserver(etSearch, countries, query -> {
+            List<Country> filteredList = countries.stream()
+                    .filter(country -> country.getName().toLowerCase().contains(query))
+                    .collect(Collectors.toList());
+            view.updateCountriesResults(filteredList);
+        });
+        //disposable.dispose();
+    }
+
+    @Override
+    public void observeIngredientSearch(EditText etSearch, List<String> ingredients) {
+        setSearchObserver(etSearch, ingredients, query -> {
+            List<String> filteredList = ingredients.stream()
+                    .filter(ingredient -> ingredient.toLowerCase().contains(query))
+                    .collect(Collectors.toList());
+            view.updateIngredientsResults(filteredList);
+        });
+        //disposable.dispose();
+    }
+
+
+    private void setSearchObserver(EditText etSearch, List<?> items, SearchObserver observer) {
+        if (currentTextWatcher != null) {
+            etSearch.removeTextChangedListener(currentTextWatcher);
+        }
+
+        currentTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                observer.onSearchQuery(s.toString().toLowerCase());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        };
+
+        etSearch.addTextChangedListener(currentTextWatcher);
+    }
+
+    private interface SearchObserver {
+        void onSearchQuery(String query);
+    }
 }

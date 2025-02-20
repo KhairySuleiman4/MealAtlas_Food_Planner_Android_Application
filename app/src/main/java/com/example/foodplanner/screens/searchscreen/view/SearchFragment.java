@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
@@ -25,6 +26,7 @@ import com.example.foodplanner.model.pojos.CategoryResponse;
 import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.screens.homescreen.view.CategoriesAdapter;
 import com.example.foodplanner.screens.homescreen.view.CountriesAdapter;
+import com.example.foodplanner.screens.homescreen.view.IngredientsAdapter;
 import com.example.foodplanner.screens.homescreen.view.OnItemClickListener;
 import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenter;
 import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenterImp;
@@ -51,6 +53,7 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
     CountriesFilterAdapter countriesAdapter;
     IngredientsFilterAdapter ingredientsAdapter;
     SearchPresenter presenter;
+    EditText etSearch;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -76,8 +79,12 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
         cateChip = view.findViewById(R.id.chip_categories);
         countryChip = view.findViewById(R.id.chip_areas);
         ingredientsChip = view.findViewById(R.id.chip_ingredients);
+        etSearch = view.findViewById(R.id.et_search);
 
         chipGroup.setSingleSelection(true);
+        cateChip.setCheckable(true);
+        countryChip.setCheckable(true);
+        ingredientsChip.setCheckable(true);
 
         presenter = new SearchPresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
@@ -90,6 +97,10 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
         cateChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countryChip.setChecked(false);
+                ingredientsChip.setChecked(false);
+                cateChip.setChecked(true);
+                etSearch.setHint("Search By Category");
                 rvFilter.setAdapter(categoriesAdapter);
                 presenter.getCategories();
             }
@@ -98,6 +109,10 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
         countryChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countryChip.setChecked(true);
+                ingredientsChip.setChecked(false);
+                cateChip.setChecked(false);
+                etSearch.setHint("Search By Country");
                 rvFilter.setAdapter(countriesAdapter);
                 presenter.getCountries();
             }
@@ -106,6 +121,10 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
         ingredientsChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countryChip.setChecked(false);
+                ingredientsChip.setChecked(true);
+                cateChip.setChecked(false);
+                etSearch.setHint("Search By Ingredient");
                 rvFilter.setAdapter(ingredientsAdapter);
                 presenter.getIngredients();
             }
@@ -115,19 +134,37 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
     @Override
     public void showAllCategories(List<Category> categories) {
         categoriesAdapter.setCategories(categories);
+        presenter.observeCategorySearch(etSearch, categories);
         categoriesAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showAllCountries(List<Country> countries) {
         countriesAdapter.setCountries(countries);
+        presenter.observeCountrySearch(etSearch, countries);
         countriesAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showAllIngredients(List<String> ingredients) {
         ingredientsAdapter.setIngredients(ingredients);
+        presenter.observeIngredientSearch(etSearch, ingredients);
         ingredientsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateCategoriesResults(List<Category> categories) {
+        rvFilter.setAdapter(new CategoriesFilterAdapter(getContext(), categories, this));
+    }
+
+    @Override
+    public void updateCountriesResults(List<Country> countries) {
+        rvFilter.setAdapter(new CountriesFilterAdapter(getContext(), countries, this));
+    }
+
+    @Override
+    public void updateIngredientsResults(List<String> ingredients) {
+        rvFilter.setAdapter(new IngredientsFilterAdapter(getContext(), ingredients, this));
     }
 
     @Override

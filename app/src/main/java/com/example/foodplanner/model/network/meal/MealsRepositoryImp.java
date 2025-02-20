@@ -45,4 +45,9 @@ public class MealsRepositoryImp implements MealsRepository{
     public Single<List<Meal>> mealsByIngredient(String ingredient) {
         return remote.mealsByIngredient(ingredient);
     }
+
+    @Override
+    public Single<Meal> mealByName(String mealName) {
+        return remote.mealByName(mealName);
+    }
 }
