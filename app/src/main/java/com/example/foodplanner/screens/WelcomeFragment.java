@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens.splashscreen;
+package com.example.foodplanner.screens;
 
 import android.os.Bundle;
 
@@ -7,21 +7,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 
-public class SplashScreenFragment extends Fragment {
+public class WelcomeFragment extends Fragment {
 
-    ImageView ivSplash;
-    LottieAnimationView lottieAnimation;
-
-    public SplashScreenFragment() {
+    Button btnToGuestMode;
+    public WelcomeFragment() {
         // Required empty public constructor
     }
 
@@ -35,18 +31,20 @@ public class SplashScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.splash_screen, container, false);
+        return inflater.inflate(R.layout.fragment_welcome, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivSplash = view.findViewById(R.id.iv_logo);
-        lottieAnimation = view.findViewById(R.id.lottie_animation);
-        lottieAnimation.playAnimation();
+        btnToGuestMode = view.findViewById(R.id.btn_guest);
+        btnToGuestMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_homeScreenFragment);
+            }
+        });
 
-        new Handler().postDelayed(() -> {
-            Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_welcomeFragment);
-        }, 2200);
     }
 }
