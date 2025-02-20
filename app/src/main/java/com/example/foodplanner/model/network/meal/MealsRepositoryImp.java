@@ -2,6 +2,8 @@ package com.example.foodplanner.model.network.meal;
 
 import com.example.foodplanner.model.pojos.Meal;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Single;
 
 public class MealsRepositoryImp implements MealsRepository{
@@ -22,5 +24,10 @@ public class MealsRepositoryImp implements MealsRepository{
     @Override
     public Single<Meal> mealNetworkCall() {
         return remote.mealNetworkCall();
+    }
+
+    @Override
+    public Single<List<Meal>> ingredientsNetworkCall() {
+        return remote.ingredientsNetworkCall();
     }
 }

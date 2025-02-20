@@ -8,4 +8,5 @@ public interface HomePresenter {
     void getCategories();
     void getRandomMeal();
     void getCountries();
+    void getIngredients();
 }

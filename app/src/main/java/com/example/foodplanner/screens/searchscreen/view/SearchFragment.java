@@ -17,6 +17,8 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.model.network.category.CategoriesRemoteDataSourceImp;
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryService;
+import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
 import com.example.foodplanner.model.pojos.Country;
@@ -41,11 +43,12 @@ public class SearchFragment extends Fragment implements SearchView {
     ChipGroup chipGroup;
     Chip cateChip;
     Chip countryChip;
+    Chip ingredientsChip;
     RecyclerView rvFilter;
     CategoriesFilterAdapter categoriesAdapter;
     CountriesFilterAdapter countriesAdapter;
+    IngredientsFilterAdapter ingredientsAdapter;
     SearchPresenter presenter;
-    //FilterAdapter adapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -54,7 +57,6 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -71,14 +73,18 @@ public class SearchFragment extends Fragment implements SearchView {
         rvFilter = view.findViewById(R.id.rv_filter);
         cateChip = view.findViewById(R.id.chip_categories);
         countryChip = view.findViewById(R.id.chip_areas);
+        ingredientsChip = view.findViewById(R.id.chip_ingredients);
+
         chipGroup.setSingleSelection(true);
+
         presenter = new SearchPresenterImp(this,
-                CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()));
+                CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
+                MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
+
         categoriesAdapter = new CategoriesFilterAdapter(getContext(), new ArrayList<>());
         countriesAdapter = new CountriesFilterAdapter(getContext(), new ArrayList<>());
-        //adapter = new FilterAdapter(getContext(), new ArrayList<>(), new ArrayList<>());
-        //rvFilter.setLayoutManager(new LinearLayoutManager(getContext()));
-        //rvFilter.setAdapter(adapter);
+        ingredientsAdapter = new IngredientsFilterAdapter(getContext(), new ArrayList<>());
+
         cateChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +92,7 @@ public class SearchFragment extends Fragment implements SearchView {
                 presenter.getCategories();
             }
         });
+
         countryChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +101,13 @@ public class SearchFragment extends Fragment implements SearchView {
             }
         });
 
+        ingredientsChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rvFilter.setAdapter(ingredientsAdapter);
+                presenter.getIngredients();
+            }
+        });
     }
 
     @Override
@@ -106,6 +120,12 @@ public class SearchFragment extends Fragment implements SearchView {
     public void showAllCountries(List<Country> countries) {
         countriesAdapter.setCountries(countries);
         countriesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAllIngredients(List<String> ingredients) {
+        ingredientsAdapter.setIngredients(ingredients);
+        ingredientsAdapter.notifyDataSetChanged();
     }
 
     @Override

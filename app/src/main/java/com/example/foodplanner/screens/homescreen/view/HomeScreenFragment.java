@@ -48,10 +48,12 @@ public class HomeScreenFragment extends Fragment implements HomeView {
     HomePresenter presenter;
     CategoriesAdapter categoriesAdapter;
     CountriesAdapter countriesAdapter;
+    IngredientsAdapter ingredientsAdapter;
     ImageView ivMealPhoto;
     TextView tvMealName;
     RecyclerView rvCates;
     RecyclerView rvCountries;
+    RecyclerView rvIngredients;
 
     public HomeScreenFragment() {
         // Required empty public constructor
@@ -76,18 +78,20 @@ public class HomeScreenFragment extends Fragment implements HomeView {
         tvMealName = view.findViewById(R.id.tv_meal_of_the_day_title);
         rvCates = view.findViewById(R.id.rv_categories);
         rvCountries = view.findViewById(R.id.rv_countries);
+        rvIngredients = view.findViewById(R.id.rv_ingredients);
         presenter = new HomePresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
                 MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
         categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>());
         countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>());
+        ingredientsAdapter = new IngredientsAdapter(getContext(), new ArrayList<>());
         rvCates.setAdapter(categoriesAdapter);
         rvCountries.setAdapter(countriesAdapter);
+        rvIngredients.setAdapter(ingredientsAdapter);
         presenter.getCategories();
         presenter.getRandomMeal();
         presenter.getCountries();
-
-
+        presenter.getIngredients();
     }
 
     @Override
@@ -116,6 +120,12 @@ public class HomeScreenFragment extends Fragment implements HomeView {
     public void showAllCountries(List<Country> countries) {
         countriesAdapter.setCountries(countries);
         countriesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAllIngredients(List<String> ingredients) {
+        ingredientsAdapter.setIngredients(ingredients);
+        ingredientsAdapter.notifyDataSetChanged();
     }
 
     @Override

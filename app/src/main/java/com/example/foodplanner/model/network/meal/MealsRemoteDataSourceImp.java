@@ -3,6 +3,8 @@ package com.example.foodplanner.model.network.meal;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.model.pojos.MealResponse;
 
+import java.util.List;
+
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
@@ -34,20 +36,11 @@ public class MealsRemoteDataSourceImp implements MealsRemoteDataSource{
     public Single<Meal> mealNetworkCall() {
         Single<MealResponse> call = mealService.getRandomMeal();
         return call.map(l -> l.getMeals().get(0));
-//        call.enqueue(new Callback<MealResponse>() {
-//            @Override
-//            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-//                if(response.isSuccessful())
-//                    mealNetworkCallBack.onSuccessRandomMealResult(response.body().getMeals());
-//                else
-//                    mealNetworkCallBack.onFailRandomMealResult(response.message());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-//                mealNetworkCallBack.onFailRandomMealResult(throwable.getMessage());
-//                throwable.printStackTrace();
-//            }
-//        });
+    }
+
+    @Override
+    public Single<List<Meal>> ingredientsNetworkCall() {
+        Single<MealResponse> call = mealService.getAllIngredients();
+        return call.map(l -> l.getMeals());
     }
 }

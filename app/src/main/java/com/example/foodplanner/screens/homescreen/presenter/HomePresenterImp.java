@@ -8,6 +8,7 @@ import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.screens.homescreen.view.HomeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -66,6 +67,30 @@ public class HomePresenterImp implements HomePresenter {
     @Override
     public void getCountries() {
         view.showAllCountries(CountriesRepositoryImp.getCountries());
+    }
+
+    @Override
+    public void getIngredients() {
+        Single<List<Meal>> observable = mealsRepo.ingredientsNetworkCall();
+        disposable.add(
+                observable
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .flatMap(meals -> {
+                            List<String> ingredients = new ArrayList<>();
+                            for (Meal meal : meals) {
+                                ingredients.add(meal.getStrIngredient());
+                            }
+                            return Single.just(ingredients);
+                        })
+                        .subscribe(
+                                ingredients -> {
+                                    view.showAllIngredients(ingredients);
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        ));
+        //disposable.dispose();
     }
 
 
