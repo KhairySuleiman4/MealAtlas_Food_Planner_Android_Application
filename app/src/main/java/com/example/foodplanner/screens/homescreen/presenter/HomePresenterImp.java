@@ -2,37 +2,65 @@ package com.example.foodplanner.screens.homescreen.presenter;
 
 //import com.example.foodplanner.model.network.category.CategoriesRepository;
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
-import com.example.foodplanner.model.network.category.CategoryNetworkCallBack;
 import com.example.foodplanner.model.network.country.CountriesRepositoryImp;
-import com.example.foodplanner.model.network.meal.MealNetworkCallBack;
 import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Category;
-import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.screens.homescreen.view.HomeView;
 
-import java.util.Collections;
 import java.util.List;
 
-public class HomePresenterImp implements HomePresenter, CategoryNetworkCallBack, MealNetworkCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class HomePresenterImp implements HomePresenter {
     HomeView view;
     CategoriesRepositoryImp categoriesRepo;
     MealsRepositoryImp mealsRepo;
+    CompositeDisposable disposable;
 
     public HomePresenterImp(HomeView view, CategoriesRepositoryImp categoriesRepo, MealsRepositoryImp mealsRepo) {
         this.view = view;
         this.categoriesRepo = categoriesRepo;
         this.mealsRepo = mealsRepo;
+        disposable = new CompositeDisposable();
     }
 
     @Override
     public void getCategories() {
-        categoriesRepo.categoryNetworkCall(this);
+        Single<List<Category>> observable = categoriesRepo.categoryNetworkCall();
+        disposable.add(
+                observable
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                item -> {
+                                    view.showAllCategories(item);
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
+        //disposable.dispose();
     }
 
     @Override
     public void getRandomMeal() {
-        mealsRepo.mealNetworkCall(this);
+        Single<Meal> observable = mealsRepo.mealNetworkCall();
+        disposable.add(
+                observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        item -> {
+                            view.showRandomMeal(item);
+                        }, error -> {
+                            view.showError(error.getMessage());
+                        }
+                ));
+        //disposable.dispose();
     }
 
     @Override
@@ -40,24 +68,5 @@ public class HomePresenterImp implements HomePresenter, CategoryNetworkCallBack,
         view.showAllCountries(CountriesRepositoryImp.getCountries());
     }
 
-    @Override
-    public void onSuccessResult(List<Category> categories) {
-        view.showAllCategories(categories);
-    }
-
-    @Override
-    public void onFailResult(String error) {
-        view.showError(error);
-    }
-
-    @Override
-    public void onSuccessRandomMealResult(List<Meal> meals) {
-        view.showRandomMeal(meals.get(0));
-    }
-
-    @Override
-    public void onFailRandomMealResult(String error) {
-        view.showError(error);
-    }
 
 }

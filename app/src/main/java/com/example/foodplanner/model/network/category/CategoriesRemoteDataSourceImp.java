@@ -1,8 +1,12 @@
 package com.example.foodplanner.model.network.category;
 
-import com.example.foodplanner.model.network.meal.MealNetworkCallBack;
+import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
 
+import java.util.List;
+
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,27 +27,29 @@ public class CategoriesRemoteDataSourceImp implements CategoriesRemoteDataSource
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         categoryService = retrofit.create(CategoryService.class);
     }
 
     @Override
-    public void categoryNetworkCall(CategoryNetworkCallBack categoryNetworkCallBack) {
-        Call<CategoryResponse> call = categoryService.getCategories();
-        call.enqueue(new Callback<CategoryResponse>() {
-            @Override
-            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-                if(response.isSuccessful())
-                    categoryNetworkCallBack.onSuccessResult(response.body().getCates());
-                else
-                    categoryNetworkCallBack.onFailResult(response.message());
-            }
-
-            @Override
-            public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
-                categoryNetworkCallBack.onFailResult(throwable.getMessage());
-                throwable.printStackTrace();
-            }
-        });
+    public Single<List<Category>> categoryNetworkCall() {
+        Single<CategoryResponse> call = categoryService.getCategories();
+        return call.map(l -> l.getCates());
+//        call.enqueue(new Callback<CategoryResponse>() {
+//            @Override
+//            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+//                if(response.isSuccessful())
+//                    categoryNetworkCallBack.onSuccessResult(response.body().getCates());
+//                else
+//                    categoryNetworkCallBack.onFailResult(response.message());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
+//                categoryNetworkCallBack.onFailResult(throwable.getMessage());
+//                throwable.printStackTrace();
+//            }
+//        });
     }
 }
