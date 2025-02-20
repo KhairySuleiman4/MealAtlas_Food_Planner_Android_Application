@@ -20,10 +20,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesViewHolder> 
 
     private Context context;
     private List<Country> countries;
+    private OnItemClickListener listener;
 
-    public CountriesAdapter(Context context, List<Country> countries) {
+    public CountriesAdapter(Context context, List<Country> countries, OnItemClickListener listener) {
         this.context = context;
         this.countries = countries;
+        this.listener = listener;
     }
 
     public void setCountries(List<Country> countries) {
@@ -41,8 +43,15 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CountriesViewHolder holder, int i) {
+        String countryName = countries.get(i).getName();
         holder.ivFlag.setImageResource(countries.get(i).getFlag());
-        holder.tvName.setText(countries.get(i).getName());
+        holder.tvName.setText(countryName);
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCountryClick(countryName);
+            }
+        });
     }
 
     @Override
@@ -55,8 +64,6 @@ class CountriesViewHolder extends RecyclerView.ViewHolder{
     View convertedView;
     ImageView ivFlag;
     TextView tvName;
-
-
     public CountriesViewHolder(@NonNull View itemView) {
         super(itemView);
         convertedView = itemView;

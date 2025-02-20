@@ -13,16 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.screens.homescreen.view.OnItemClickListener;
 
 import java.util.List;
 
 public class IngredientsFilterAdapter extends RecyclerView.Adapter<IngredientsFilterViewHolder>{
     private Context context;
     private List<String> ingredients;
-
-    public IngredientsFilterAdapter(Context context, List<String> ingredients) {
+    private OnItemClickListener listener;
+    public IngredientsFilterAdapter(Context context, List<String> ingredients, OnItemClickListener listener) {
         this.context = context;
         this.ingredients = ingredients;
+        this.listener = listener;
     }
 
     public void setIngredients(List<String> ingredients) {
@@ -42,7 +44,12 @@ public class IngredientsFilterAdapter extends RecyclerView.Adapter<IngredientsFi
         Glide.with(context)
                 .load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png")
                 .into(holder.ivFilter);
-
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onIngredientClick(ingredient);
+            }
+        });
     }
 
     @Override
@@ -52,11 +59,9 @@ public class IngredientsFilterAdapter extends RecyclerView.Adapter<IngredientsFi
 }
 
 class IngredientsFilterViewHolder extends RecyclerView.ViewHolder{
-
     View convertedView;
     ImageView ivFilter;
     TextView tvFilter;
-
     public IngredientsFilterViewHolder(@NonNull View itemView) {
         super(itemView);
         convertedView = itemView;

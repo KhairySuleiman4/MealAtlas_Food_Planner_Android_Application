@@ -13,20 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.Country;
+import com.example.foodplanner.screens.homescreen.view.OnItemClickListener;
 
 import java.util.List;
 
 public class CountriesFilterAdapter extends RecyclerView.Adapter<CountriesFilterViewHolder> {
     private Context context;
     private List<Country> countries;
+    private OnItemClickListener listener;
 
     public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
 
-    public CountriesFilterAdapter(Context context, List<Country> countries) {
+    public CountriesFilterAdapter(Context context, List<Country> countries, OnItemClickListener listener) {
         this.context = context;
         this.countries = countries;
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,8 +43,15 @@ public class CountriesFilterAdapter extends RecyclerView.Adapter<CountriesFilter
 
     @Override
     public void onBindViewHolder(@NonNull CountriesFilterViewHolder holder, int i) {
+        String countryName = countries.get(i).getName();
         holder.ivFilter.setImageResource(countries.get(i).getFlag());
-        holder.tvFilter.setText(countries.get(i).getName());
+        holder.tvFilter.setText(countryName);
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCountryClick(countryName);
+            }
+        });
     }
 
     @Override
