@@ -10,8 +10,8 @@
         android:name="com.example.foodplanner.screens.splashscreen.SplashScreenFragment"
         android:label="SplashScreenFragment" >
         <action
-            android:id="@+id/action_splashScreenFragment_to_mealOfTheDayFragment"
-            app:destination="@id/homeScreenFragment"
+            android:id="@+id/action_splashScreenFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -62,5 +62,16 @@
         <action
             android:id="@+id/action_searchMealByNameFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.foodplanner.screens.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
