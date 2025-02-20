@@ -36,20 +36,5 @@ public class CategoriesRemoteDataSourceImp implements CategoriesRemoteDataSource
     public Single<List<Category>> categoryNetworkCall() {
         Single<CategoryResponse> call = categoryService.getCategories();
         return call.map(l -> l.getCates());
-//        call.enqueue(new Callback<CategoryResponse>() {
-//            @Override
-//            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-//                if(response.isSuccessful())
-//                    categoryNetworkCallBack.onSuccessResult(response.body().getCates());
-//                else
-//                    categoryNetworkCallBack.onFailResult(response.message());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
-//                categoryNetworkCallBack.onFailResult(throwable.getMessage());
-//                throwable.printStackTrace();
-//            }
-//        });
     }
 }

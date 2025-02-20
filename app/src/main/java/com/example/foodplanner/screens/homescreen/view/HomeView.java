@@ -10,5 +10,6 @@ public interface HomeView {
     void showAllCategories(List<Category> categories);
     void showRandomMeal(Meal meal);
     void showAllCountries(List<Country> countries);
+    void showAllIngredients(List<String> ingredients);
     void showError(String error);
 }

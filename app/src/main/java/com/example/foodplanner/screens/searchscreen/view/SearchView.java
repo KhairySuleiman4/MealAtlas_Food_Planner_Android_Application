@@ -8,5 +8,6 @@ import java.util.List;
 public interface SearchView {
     void showAllCategories(List<Category> categories);
     void showAllCountries(List<Country> countries);
+    void showAllIngredients(List<String> ingredients);
     void showError(String error);
 }

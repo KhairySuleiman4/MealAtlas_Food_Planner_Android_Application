@@ -77,9 +77,16 @@ public class MealDetailsFragment extends Fragment {
         tvInst.setText(meal.getMealInst());
         rvMealIngredients.setAdapter(adapter);
 
-        String videoId = meal.getStrYoutube().split("v=")[1];
-        String embedUrl = "https://www.youtube.com/embed/" + videoId;
+        String videoId = "";
+        String youtubeUrl = meal.getStrYoutube();
 
+        if (youtubeUrl != null && youtubeUrl.contains("v=")) {
+            String[] splitUrl = youtubeUrl.split("v=");
+            if (splitUrl.length > 1) {
+                videoId = splitUrl[1];
+            }
+        }
+        String embedUrl = "https://www.youtube.com/embed/" + videoId;
         wvYoutube.getSettings().setJavaScriptEnabled(true);
         wvYoutube.getSettings().setDomStorageEnabled(true);
         wvYoutube.getSettings().setMediaPlaybackRequiresUserGesture(false);
@@ -91,149 +98,68 @@ public class MealDetailsFragment extends Fragment {
     }
 
     private void storeIngredients(Meal meal) {
-        for(int i = 1; i < 21; i++){
-            switch (i){
-                case 1:
-                    if(meal.getMealIng1().isBlank() || meal.getMealMeas1().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng1());
-                    measures.add(meal.getMealMeas1());
-                    break;
-                case 2:
-                    if(meal.getMealIng2().isBlank() || meal.getMealMeas2().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng2());
-                    measures.add(meal.getMealMeas2());
-                    break;
-                case 3:
-                    if(meal.getMealIng3().isBlank() || meal.getMealMeas3().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng3());
-                    measures.add(meal.getMealMeas3());
-                    break;
-                case 4:
-                    if(meal.getMealIng4().isBlank() || meal.getMealMeas4().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng4());
-                    measures.add(meal.getMealMeas4());
-                    break;
-                case 5:
-                    if(meal.getMealIng5().isBlank() || meal.getMealMeas5().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng5());
-                    measures.add(meal.getMealMeas5());
-                    break;
-                case 6:
-                    if(meal.getMealIng6().isBlank() || meal.getMealMeas6().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng6());
-                    measures.add(meal.getMealMeas6());
-                    break;
-                case 7:
-                    if(meal.getMealIng7().isBlank() || meal.getMealMeas7().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng7());
-                    measures.add(meal.getMealMeas7());
-                    break;
-                case 8:
-                    if(meal.getMealIng8().isBlank() || meal.getMealMeas8().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng8());
-                    measures.add(meal.getMealMeas8());
-                    break;
-                case 9:
-                    if(meal.getMealIng9().isBlank() || meal.getMealMeas9().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng9());
-                    measures.add(meal.getMealMeas9());
-                    break;
-                case 10:
-                    if(meal.getMealIng10().isBlank() || meal.getMealMeas10().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng10());
-                    measures.add(meal.getMealMeas10());
-                    break;
-                case 11:
-                    if(meal.getMealIng11().isBlank() || meal.getMealMeas11().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng11());
-                    measures.add(meal.getMealMeas11());
-                    break;
-                case 12:
-                    if(meal.getMealIng12().isBlank() || meal.getMealMeas12().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng12());
-                    measures.add(meal.getMealMeas12());
-                    break;
-                case 13:
-                    if(meal.getMealIng13().isBlank() || meal.getMealMeas13().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng13());
-                    measures.add(meal.getMealMeas13());
-                    break;
-                case 14:
-                    if(meal.getMealIng14().isBlank() || meal.getMealMeas14().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng14());
-                    measures.add(meal.getMealMeas14());
-                    break;
-                case 15:
-                    if(meal.getMealIng15().isBlank() || meal.getMealMeas15().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng15());
-                    measures.add(meal.getMealMeas15());
-                    break;
-                case 16:
-                    if(meal.getMealIng16().isBlank() || meal.getMealMeas16().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng16());
-                    measures.add(meal.getMealMeas16());
-                    break;
-                case 17:
-                    if(meal.getMealIng17().isBlank() || meal.getMealMeas17().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng17());
-                    measures.add(meal.getMealMeas17());
-                    break;
-                case 18:
-                    if(meal.getMealIng18().isBlank() || meal.getMealMeas18().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng18());
-                    measures.add(meal.getMealMeas18());
-                    break;
-                case 19:
-                    if(meal.getMealIng19().isBlank() || meal.getMealMeas19().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng19());
-                    measures.add(meal.getMealMeas19());
-                    break;
-                case 20:
-                    if(meal.getMealIng20().isBlank() || meal.getMealMeas20().isBlank()){
-                        return;
-                    }
-                    ingredients.add(meal.getMealIng20());
-                    measures.add(meal.getMealMeas20());
-                    break;
+        for (int i = 1; i <= 20; i++) {
+            String ingredient = getIngredientByIndex(meal, i);
+            String measure = getMeasureByIndex(meal, i);
+
+            if (ingredient == null || measure == null || ingredient.isBlank() || measure.isBlank()) {
+                continue;
             }
+
+            ingredients.add(ingredient);
+            measures.add(measure);
+        }
+    }
+
+    private String getIngredientByIndex(Meal meal, int index) {
+        switch (index) {
+            case 1: return meal.getMealIng1();
+            case 2: return meal.getMealIng2();
+            case 3: return meal.getMealIng3();
+            case 4: return meal.getMealIng4();
+            case 5: return meal.getMealIng5();
+            case 6: return meal.getMealIng6();
+            case 7: return meal.getMealIng7();
+            case 8: return meal.getMealIng8();
+            case 9: return meal.getMealIng9();
+            case 10: return meal.getMealIng10();
+            case 11: return meal.getMealIng11();
+            case 12: return meal.getMealIng12();
+            case 13: return meal.getMealIng13();
+            case 14: return meal.getMealIng14();
+            case 15: return meal.getMealIng15();
+            case 16: return meal.getMealIng16();
+            case 17: return meal.getMealIng17();
+            case 18: return meal.getMealIng18();
+            case 19: return meal.getMealIng19();
+            case 20: return meal.getMealIng20();
+            default: return null;
+        }
+    }
+
+    private String getMeasureByIndex(Meal meal, int index) {
+        switch (index) {
+            case 1: return meal.getMealMeas1();
+            case 2: return meal.getMealMeas2();
+            case 3: return meal.getMealMeas3();
+            case 4: return meal.getMealMeas4();
+            case 5: return meal.getMealMeas5();
+            case 6: return meal.getMealMeas6();
+            case 7: return meal.getMealMeas7();
+            case 8: return meal.getMealMeas8();
+            case 9: return meal.getMealMeas9();
+            case 10: return meal.getMealMeas10();
+            case 11: return meal.getMealMeas11();
+            case 12: return meal.getMealMeas12();
+            case 13: return meal.getMealMeas13();
+            case 14: return meal.getMealMeas14();
+            case 15: return meal.getMealMeas15();
+            case 16: return meal.getMealMeas16();
+            case 17: return meal.getMealMeas17();
+            case 18: return meal.getMealMeas18();
+            case 19: return meal.getMealMeas19();
+            case 20: return meal.getMealMeas20();
+            default: return null;
         }
     }
 }
