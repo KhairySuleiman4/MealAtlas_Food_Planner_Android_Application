@@ -1,7 +1,11 @@
 package com.example.foodplanner.model.network.category;
 
-import com.example.foodplanner.model.network.meal.MealNetworkCallBack;
+import com.example.foodplanner.model.pojos.Category;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Single;
 
 public interface CategoriesRemoteDataSource {
-    void categoryNetworkCall(CategoryNetworkCallBack categoryNetworkCallBack);
+    Single<List<Category>> categoryNetworkCall();
 }

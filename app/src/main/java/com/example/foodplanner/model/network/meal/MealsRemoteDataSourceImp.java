@@ -1,7 +1,10 @@
 package com.example.foodplanner.model.network.meal;
 
+import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.model.pojos.MealResponse;
 
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,27 +25,29 @@ public class MealsRemoteDataSourceImp implements MealsRemoteDataSource{
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         mealService = retrofit.create(MealService.class);
     }
 
     @Override
-    public void mealNetworkCall(MealNetworkCallBack mealNetworkCallBack) {
-        Call<MealResponse> call = mealService.getRandomMeal();
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                if(response.isSuccessful())
-                    mealNetworkCallBack.onSuccessRandomMealResult(response.body().getMeals());
-                else
-                    mealNetworkCallBack.onFailRandomMealResult(response.message());
-            }
-
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable throwable) {
-                mealNetworkCallBack.onFailRandomMealResult(throwable.getMessage());
-                throwable.printStackTrace();
-            }
-        });
+    public Single<Meal> mealNetworkCall() {
+        Single<MealResponse> call = mealService.getRandomMeal();
+        return call.map(l -> l.getMeals().get(0));
+//        call.enqueue(new Callback<MealResponse>() {
+//            @Override
+//            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+//                if(response.isSuccessful())
+//                    mealNetworkCallBack.onSuccessRandomMealResult(response.body().getMeals());
+//                else
+//                    mealNetworkCallBack.onFailRandomMealResult(response.message());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MealResponse> call, Throwable throwable) {
+//                mealNetworkCallBack.onFailRandomMealResult(throwable.getMessage());
+//                throwable.printStackTrace();
+//            }
+//        });
     }
 }
