@@ -18,17 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder> {
-
     private Context context;
     private List<Category> categories;
+    private OnItemClickListener listener;
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
-    public CategoriesAdapter(Context context, List<Category> categories) {
+    public CategoriesAdapter(Context context, List<Category> categories, OnItemClickListener listener) {
         this.context = context;
         this.categories = categories;
+        this.listener = listener;
     }
 
     @NonNull
@@ -42,10 +43,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder holder, int i) {
+        String categoryName = categories.get(i).getCateName();
         Glide.with(context)
                 .load(categories.get(i).getCateImage())
                 .into(holder.ivCateImage);
-        holder.tvCateName.setText(categories.get(i).getCateName());
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCategoryClick(categoryName);
+            }
+        });
+        holder.tvCateName.setText(categoryName);
+
     }
 
     @Override
@@ -55,11 +64,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
 }
 
 class CategoriesViewHolder extends RecyclerView.ViewHolder{
-
     View convertedView;
     ImageView ivCateImage;
     TextView tvCateName;
-
     public CategoriesViewHolder(@NonNull View itemView) {
         super(itemView);
         convertedView = itemView;

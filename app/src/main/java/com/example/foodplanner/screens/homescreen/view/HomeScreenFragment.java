@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 //import com.example.foodplanner.HomeScreenFragmentDirections;
@@ -43,7 +44,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeScreenFragment extends Fragment implements HomeView {
+public class HomeScreenFragment extends Fragment implements HomeView, OnItemClickListener {
 
     HomePresenter presenter;
     CategoriesAdapter categoriesAdapter;
@@ -82,9 +83,9 @@ public class HomeScreenFragment extends Fragment implements HomeView {
         presenter = new HomePresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
                 MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
-        categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>());
-        countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>());
-        ingredientsAdapter = new IngredientsAdapter(getContext(), new ArrayList<>());
+        categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>(), this);
+        countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>(), this);
+        ingredientsAdapter = new IngredientsAdapter(getContext(), new ArrayList<>(), this);
         rvCates.setAdapter(categoriesAdapter);
         rvCountries.setAdapter(countriesAdapter);
         rvIngredients.setAdapter(ingredientsAdapter);
@@ -130,6 +131,21 @@ public class HomeScreenFragment extends Fragment implements HomeView {
 
     @Override
     public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onCategoryClick(String category) {
+        presenter.getMealsByCategory(category, requireView());
+    }
+
+    @Override
+    public void onCountryClick(String country) {
+        presenter.getMealsByCountry(country, requireView());
+    }
+
+    @Override
+    public void onIngredientClick(String ingredient) {
+        presenter.getMealsByIngredient(ingredient, requireView());
     }
 }

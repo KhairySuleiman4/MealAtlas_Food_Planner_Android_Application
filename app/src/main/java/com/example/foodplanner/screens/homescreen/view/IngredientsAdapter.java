@@ -17,17 +17,18 @@ import com.example.foodplanner.model.pojos.Meal;
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsViewHolder> {
-
     private Context context;
     private List<String> ingredients;
+    private OnItemClickListener listener;
 
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public IngredientsAdapter(Context context, List<String> ingredients) {
+    public IngredientsAdapter(Context context, List<String> ingredients, OnItemClickListener listener) {
         this.context = context;
         this.ingredients = ingredients;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +44,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsViewHold
         Glide.with(context)
                 .load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png")
                 .into(holder.ivIngredient);
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onIngredientClick(ingredient);
+            }
+        });
     }
 
     @Override
@@ -52,10 +59,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsViewHold
 }
 
 class IngredientsViewHolder extends RecyclerView.ViewHolder{
+    View convertedView;
     ImageView ivIngredient;
     TextView tvIngredient;
     public IngredientsViewHolder(@NonNull View itemView) {
         super(itemView);
+        convertedView = itemView;
         ivIngredient = itemView.findViewById(R.id.iv_card_item);
         tvIngredient = itemView.findViewById(R.id.tv_card_item);
     }

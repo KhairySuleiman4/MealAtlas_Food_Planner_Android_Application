@@ -30,4 +30,19 @@ public class MealsRepositoryImp implements MealsRepository{
     public Single<List<Meal>> ingredientsNetworkCall() {
         return remote.ingredientsNetworkCall();
     }
+
+    @Override
+    public Single<List<Meal>> mealsByCategory(String category) {
+        return remote.mealsByCategory(category);
+    }
+
+    @Override
+    public Single<List<Meal>> mealsByCountry(String country) {
+        return remote.mealsByCountry(country);
+    }
+
+    @Override
+    public Single<List<Meal>> mealsByIngredient(String ingredient) {
+        return remote.mealsByIngredient(ingredient);
+    }
 }

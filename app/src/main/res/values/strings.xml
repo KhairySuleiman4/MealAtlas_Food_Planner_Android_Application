@@ -16,4 +16,5 @@
     <string name="str_desc">Discreption</string>
     <string name="str_view"><![CDATA[View >]]></string>
     <string name="str_youtube">Youtube</string>
+    <string name="str_search_meal">Search By Meal</string>
 </resources>

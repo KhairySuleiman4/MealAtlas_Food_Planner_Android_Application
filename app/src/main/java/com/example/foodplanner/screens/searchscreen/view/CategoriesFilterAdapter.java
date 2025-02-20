@@ -13,21 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Category;
+import com.example.foodplanner.screens.homescreen.view.OnItemClickListener;
 
 import java.util.List;
 
 public class CategoriesFilterAdapter extends RecyclerView.Adapter<CategoriesFilterViewHolder> {
-
     private Context context;
     private List<Category> categories;
+    private OnItemClickListener listener;
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
-    public CategoriesFilterAdapter(Context context, List<Category> categories) {
+    public CategoriesFilterAdapter(Context context, List<Category> categories, OnItemClickListener listener) {
         this.context = context;
         this.categories = categories;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,10 +43,17 @@ public class CategoriesFilterAdapter extends RecyclerView.Adapter<CategoriesFilt
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesFilterViewHolder holder, int i) {
+        String categoryName = categories.get(i).getCateName();
         Glide.with(context)
                 .load(categories.get(i).getCateImage())
                 .into(holder.ivFilter);
         holder.tvFilter.setText(categories.get(i).getCateName());
+        holder.convertedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCategoryClick(categoryName);
+            }
+        });
     }
 
     @Override
@@ -54,7 +63,6 @@ public class CategoriesFilterAdapter extends RecyclerView.Adapter<CategoriesFilt
 }
 
 class CategoriesFilterViewHolder extends RecyclerView.ViewHolder{
-
     View convertedView;
     ImageView ivFilter;
     TextView tvFilter;

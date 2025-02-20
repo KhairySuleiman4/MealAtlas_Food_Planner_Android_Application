@@ -1,10 +1,16 @@
 package com.example.foodplanner.screens.searchscreen.presenter;
 
+import android.view.View;
+
+import androidx.navigation.Navigation;
+
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.country.CountriesRepositoryImp;
 import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.Meal;
+import com.example.foodplanner.screens.homescreen.view.HomeScreenFragmentDirections;
+import com.example.foodplanner.screens.searchscreen.view.SearchFragmentDirections;
 import com.example.foodplanner.screens.searchscreen.view.SearchView;
 
 import java.util.ArrayList;
@@ -72,6 +78,66 @@ public class SearchPresenterImp implements SearchPresenter {
                                     view.showError(error.getMessage());
                                 }
                         ));
+        //disposable.dispose();
+    }
+
+    @Override
+    public void getMealsByCategory(String category, View v) {
+        Single<List<Meal>> observable = mealsRepo.mealsByCategory(category);
+        disposable.add(
+                observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(list -> list.toArray(new Meal[0]))
+                        .subscribe(
+                                meals -> {
+                                    SearchFragmentDirections.ActionSearchFragmentToSearchMealByNameFragment action =
+                                            SearchFragmentDirections.actionSearchFragmentToSearchMealByNameFragment(meals, category);
+                                    Navigation.findNavController(v).navigate(action);
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
+        //disposable.dispose();
+    }
+
+    @Override
+    public void getMealsByCountry(String country, View v) {
+        Single<List<Meal>> observable = mealsRepo.mealsByCountry(country);
+        disposable.add(
+                observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(list -> list.toArray(new Meal[0]))
+                        .subscribe(
+                                meals -> {
+                                    SearchFragmentDirections.ActionSearchFragmentToSearchMealByNameFragment action =
+                                            SearchFragmentDirections.actionSearchFragmentToSearchMealByNameFragment(meals, country);
+                                    Navigation.findNavController(v).navigate(action);
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
+        //disposable.dispose();
+    }
+
+    @Override
+    public void getMealsByIngredient(String ingredient, View v) {
+        Single<List<Meal>> observable = mealsRepo.mealsByIngredient(ingredient);
+        disposable.add(
+                observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(list -> list.toArray(new Meal[0]))
+                        .subscribe(
+                                meals -> {
+                                    SearchFragmentDirections.ActionSearchFragmentToSearchMealByNameFragment action =
+                                            SearchFragmentDirections.actionSearchFragmentToSearchMealByNameFragment(meals, ingredient);
+                                    Navigation.findNavController(v).navigate(action);
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
         //disposable.dispose();
     }
 

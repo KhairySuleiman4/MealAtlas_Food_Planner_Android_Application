@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.network.category.CategoriesRemoteDataSourceImp;
@@ -24,6 +25,7 @@ import com.example.foodplanner.model.pojos.CategoryResponse;
 import com.example.foodplanner.model.pojos.Country;
 import com.example.foodplanner.screens.homescreen.view.CategoriesAdapter;
 import com.example.foodplanner.screens.homescreen.view.CountriesAdapter;
+import com.example.foodplanner.screens.homescreen.view.OnItemClickListener;
 import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenter;
 import com.example.foodplanner.screens.searchscreen.presenter.SearchPresenterImp;
 import com.google.android.material.chip.Chip;
@@ -38,7 +40,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchFragment extends Fragment implements SearchView {
+public class SearchFragment extends Fragment implements SearchView, OnItemClickListener {
 
     ChipGroup chipGroup;
     Chip cateChip;
@@ -81,9 +83,9 @@ public class SearchFragment extends Fragment implements SearchView {
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
                 MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
 
-        categoriesAdapter = new CategoriesFilterAdapter(getContext(), new ArrayList<>());
-        countriesAdapter = new CountriesFilterAdapter(getContext(), new ArrayList<>());
-        ingredientsAdapter = new IngredientsFilterAdapter(getContext(), new ArrayList<>());
+        categoriesAdapter = new CategoriesFilterAdapter(getContext(), new ArrayList<>(), this);
+        countriesAdapter = new CountriesFilterAdapter(getContext(), new ArrayList<>(), this);
+        ingredientsAdapter = new IngredientsFilterAdapter(getContext(), new ArrayList<>(), this);
 
         cateChip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +132,21 @@ public class SearchFragment extends Fragment implements SearchView {
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onCategoryClick(String category) {
+        presenter.getMealsByCategory(category, requireView());
+    }
+
+    @Override
+    public void onCountryClick(String country) {
+        presenter.getMealsByCountry(country, requireView());
+    }
+
+    @Override
+    public void onIngredientClick(String ingredient) {
+        presenter.getMealsByIngredient(ingredient, requireView());
+    }
 }
