@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens;
+package com.example.foodplanner.screens.signupscreen;
 
 import android.os.Bundle;
 
@@ -14,10 +14,10 @@ import android.widget.Button;
 
 import com.example.foodplanner.R;
 
-public class WelcomeFragment extends Fragment {
+public class SignUpFragment extends Fragment {
+    Button btnSignUp;
 
-    Button btnToGuestMode;
-    public WelcomeFragment() {
+    public SignUpFragment() {
         // Required empty public constructor
     }
 
@@ -31,20 +31,19 @@ public class WelcomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false);
-
+        return inflater.inflate(R.layout.fragment_sign_up, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btnToGuestMode = view.findViewById(R.id.btn_guest);
-        btnToGuestMode.setOnClickListener(new View.OnClickListener() {
+        btnSignUp = view.findViewById(R.id.btn_sign_up);
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_homeScreenFragment);
+                Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_homeScreenFragment);
             }
         });
-
     }
 }
