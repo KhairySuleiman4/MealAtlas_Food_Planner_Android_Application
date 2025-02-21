@@ -88,7 +88,7 @@
         <action
             android:id="@+id/action_loginFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -102,7 +102,7 @@
         <action
             android:id="@+id/action_signUpFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment"
-            app:popUpTo="@id/signUpFragment"
+            app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>
