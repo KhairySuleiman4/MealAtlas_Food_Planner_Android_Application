@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.room.rxjava3)
     implementation(libs.lottie)
     implementation(libs.play.services.auth)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
 }

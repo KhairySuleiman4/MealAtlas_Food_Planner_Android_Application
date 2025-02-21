@@ -13,20 +13,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.example.foodplanner.MealDetailsFragmentArgs;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Meal;
+import com.example.foodplanner.screens.mealdetailsscreen.presenter.MealDetailsPresenterImp;
+import com.google.firebase.auth.FirebaseAuth;
 //import com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragmentArgs;
 
 import java.util.ArrayList;
 
-public class MealDetailsFragment extends Fragment {
-
+public class MealDetailsFragment extends Fragment implements MealDetailsView{
+    MealDetailsPresenterImp presenter;
     ImageView ivMealPhoto;
+    Button btnAddToFavorite;
     TextView tvMealTitle;
     TextView tvMealCate;
     TextView tvMealArea;
@@ -35,6 +43,8 @@ public class MealDetailsFragment extends Fragment {
     ArrayList<String> measures;
     RecyclerView rvMealIngredients;
     WebView wvYoutube;
+    Boolean isGuest;
+    FirebaseAuth auth;
 
     public MealDetailsFragment() {
         // Required empty public constructor
@@ -57,7 +67,13 @@ public class MealDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ingredients = new ArrayList<>();
         measures = new ArrayList<>();
+        presenter = new MealDetailsPresenterImp(this,
+                MealsRepositoryImp.getInstance(
+                        MealsRemoteDataSourceImp.getInstance(),
+                        MealsLocalDataSourceImp.getInstance(getContext())));
+
         ivMealPhoto = view.findViewById(R.id.iv_meal_photo);
+        btnAddToFavorite = view.findViewById(R.id.btn_add_to_favorite);
         tvMealTitle = view.findViewById(R.id.tv_meal_title);
         tvMealCate = view.findViewById(R.id.tv_meal_category);
         tvMealArea = view.findViewById(R.id.tv_meal_area);
@@ -65,7 +81,23 @@ public class MealDetailsFragment extends Fragment {
         rvMealIngredients = view.findViewById(R.id.rv_meal_ingredients);
         wvYoutube = view.findViewById(R.id.wv_youtube);
 
+        auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser() == null)
+            isGuest = true;
+        else isGuest = false;
+
         Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
+
+        btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isGuest)
+                    Toast.makeText(getContext(), "Login First!", Toast.LENGTH_SHORT).show();
+                else
+                    presenter.insertMeal(meal);
+            }
+        });
+
         storeIngredients(meal);
         MealIngredientsAdapter adapter = new MealIngredientsAdapter(getContext(), ingredients, measures);
         Glide.with(MealDetailsFragment.this)
@@ -161,5 +193,15 @@ public class MealDetailsFragment extends Fragment {
             case 20: return meal.getMealMeas20();
             default: return null;
         }
+    }
+
+    @Override
+    public void showAdded(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 }

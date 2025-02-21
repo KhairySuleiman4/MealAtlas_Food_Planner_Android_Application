@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
 import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
 import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Meal;
@@ -53,7 +54,9 @@ public class SearchMealByNameFragment extends Fragment implements SearchMealByNa
         etSearch = view.findViewById(R.id.et_search_meal);
         rvMeals = view.findViewById(R.id.rv_search_meals);
         presenter = new SearchMealsByNamePresenterImp(this,
-                MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
+                MealsRepositoryImp.getInstance(
+                        MealsRemoteDataSourceImp.getInstance(),
+                        MealsLocalDataSourceImp.getInstance(getContext())));
         Meal[] meals = com.example.foodplanner.screens.searchmealbynamescreen.view.SearchMealByNameFragmentArgs.fromBundle(getArguments()).getMealsOfAType();
         String type = com.example.foodplanner.screens.searchmealbynamescreen.view.SearchMealByNameFragmentArgs.fromBundle(getArguments()).getTypeName();
 

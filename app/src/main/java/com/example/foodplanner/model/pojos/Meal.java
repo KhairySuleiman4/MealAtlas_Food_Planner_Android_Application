@@ -4,10 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "favorite_meals")
 public class Meal implements Parcelable {
+
+    @PrimaryKey
+    @NonNull
+    private Long idMeal;
     @SerializedName("strMeal")
     private String mealName;
     @SerializedName("strMealThumb")
@@ -62,7 +69,7 @@ public class Meal implements Parcelable {
     @SerializedName("strMeasure19") private String mealMeas19;
     @SerializedName("strMeasure20") private String mealMeas20;
 
-    public Meal(String mealName, String mealPhoto, String mealCate, String mealArea, String mealInst,
+    public Meal(@NonNull Long idMeal, String mealName, String mealPhoto, String mealCate, String mealArea, String mealInst,
                 String strYoutube, String strIngredient,
                 String mealIng1, String mealIng2, String mealIng3, String mealIng4, String mealIng5,
                 String mealIng6, String mealIng7, String mealIng8, String mealIng9, String mealIng10,
@@ -72,7 +79,7 @@ public class Meal implements Parcelable {
                 String mealMeas6, String mealMeas7, String mealMeas8, String mealMeas9, String mealMeas10,
                 String mealMeas11, String mealMeas12, String mealMeas13, String mealMeas14, String mealMeas15,
                 String mealMeas16, String mealMeas17, String mealMeas18, String mealMeas19, String mealMeas20) {
-
+        this.idMeal = idMeal;
         this.mealName = mealName;
         this.mealPhoto = mealPhoto;
         this.mealCate = mealCate;
@@ -125,6 +132,7 @@ public class Meal implements Parcelable {
     }
 
     protected Meal(Parcel in) {
+        idMeal = in.readLong();
         mealName = in.readString();
         mealPhoto = in.readString();
         mealCate = in.readString();
@@ -178,6 +186,7 @@ public class Meal implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeLong(idMeal);
         dest.writeString(mealName);
         dest.writeString(mealPhoto);
         dest.writeString(mealCate);
@@ -248,6 +257,15 @@ public class Meal implements Parcelable {
 
     public String getStrIngredient() {
         return strIngredient;
+    }
+
+    @NonNull
+    public Long getIdMeal() {
+        return idMeal;
+    }
+
+    public void setIdMeal(@NonNull Long idMeal) {
+        this.idMeal = idMeal;
     }
 
     public void setStrIngredient(String strIngredient) {

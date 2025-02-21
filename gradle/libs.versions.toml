@@ -46,6 +46,8 @@ room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomRxjav
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 rxjava3-retrofit-adapter = { module = "com.github.akarnokd:rxjava3-retrofit-adapter", version.ref = "rxjava3RetrofitAdapter" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRxjava3" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRxjava3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

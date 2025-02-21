@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
 import com.example.foodplanner.model.network.category.CategoriesRemoteDataSourceImp;
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryService;
@@ -88,7 +89,9 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
 
         presenter = new SearchPresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
-                MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
+                MealsRepositoryImp.getInstance(
+                        MealsRemoteDataSourceImp.getInstance(),
+                        MealsLocalDataSourceImp.getInstance(getContext())));
 
         categoriesAdapter = new CategoriesFilterAdapter(getContext(), new ArrayList<>(), this);
         countriesAdapter = new CountriesFilterAdapter(getContext(), new ArrayList<>(), this);

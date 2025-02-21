@@ -110,4 +110,9 @@
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteMealsFragment"
+        android:name="com.example.foodplanner.screens.favoritemealsscreen.view.FavoriteMealsFragment"
+        android:label="fragment_favorite_meals"
+        tools:layout="@layout/fragment_favorite_meals" />
 </navigation>
