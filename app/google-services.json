@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "624517895577",
+    "project_id": "mealatlas",
+    "storage_bucket": "mealatlas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624517895577:android:e03669a885f7570f7aaf08",
+        "android_client_info": {
+          "package_name": "com.example.foodplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624517895577-7rh7qdv80e3f1fvo5eb49p09aujiklld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodplanner",
+            "certificate_hash": "09622b28389c8ef6b0efcb4785c6213e1e9d27a1"
+          }
+        },
+        {
+          "client_id": "624517895577-6j6j7gb70e2bqna77ejggpa0cmusfv15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClj4kG8thr9EotRzEupKiWpbCTQhoL3Hs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624517895577-6j6j7gb70e2bqna77ejggpa0cmusfv15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

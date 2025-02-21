@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens;
+package com.example.foodplanner.screens.welcomescreen;
 
 import android.os.Bundle;
 
@@ -15,7 +15,8 @@ import android.widget.Button;
 import com.example.foodplanner.R;
 
 public class WelcomeFragment extends Fragment {
-
+    Button btnToLogin;
+    Button btnToSignUp;
     Button btnToGuestMode;
     public WelcomeFragment() {
         // Required empty public constructor
@@ -38,7 +39,24 @@ public class WelcomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnToLogin = view.findViewById(R.id.btn_to_login);
         btnToGuestMode = view.findViewById(R.id.btn_guest);
+        btnToSignUp = view.findViewById(R.id.btn_to_sign_up);
+
+        btnToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_loginFragment);
+            }
+        });
+
+        btnToSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment);
+            }
+        });
+
         btnToGuestMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

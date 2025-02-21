@@ -1,5 +1,6 @@
 package com.example.foodplanner.screens.homescreen.view;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.CategoryResponse;
 import com.example.foodplanner.screens.homescreen.presenter.HomePresenter;
 import com.example.foodplanner.screens.homescreen.presenter.HomePresenterImp;
+import com.google.firebase.auth.FirebaseAuth;
 //import com.example.foodplanner.screens.homescreen.HomeScreenFragmentDirections;
 
 import java.util.ArrayList;
@@ -50,11 +53,14 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
     CategoriesAdapter categoriesAdapter;
     CountriesAdapter countriesAdapter;
     IngredientsAdapter ingredientsAdapter;
+    Button btnLogout;
     ImageView ivMealPhoto;
     TextView tvMealName;
     RecyclerView rvCates;
     RecyclerView rvCountries;
     RecyclerView rvIngredients;
+    FirebaseAuth auth;
+    boolean isGuest;
 
     public HomeScreenFragment() {
         // Required empty public constructor
@@ -80,19 +86,53 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
         rvCates = view.findViewById(R.id.rv_categories);
         rvCountries = view.findViewById(R.id.rv_countries);
         rvIngredients = view.findViewById(R.id.rv_ingredients);
+        btnLogout = view.findViewById(R.id.btn_logout);
+        auth = FirebaseAuth.getInstance();
+
+        // public boolean isUserLoggedIn() {
+        //            FirebaseUser user = firebaseAuth.getCurrentUser();
+        //            return user != null;}
+
+        if(auth.getCurrentUser() == null)
+            isGuest = true;
+        else isGuest = false;
+
+        Log.i("TAG", "onViewCreated: " + isGuest);
         presenter = new HomePresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
                 MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
+
         categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>(), this);
         countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>(), this);
         ingredientsAdapter = new IngredientsAdapter(getContext(), new ArrayList<>(), this);
+
         rvCates.setAdapter(categoriesAdapter);
         rvCountries.setAdapter(countriesAdapter);
         rvIngredients.setAdapter(ingredientsAdapter);
+
         presenter.getCategories();
         presenter.getRandomMeal();
         presenter.getCountries();
         presenter.getIngredients();
+
+        if(isGuest)
+            btnLogout.setVisibility(View.GONE);
+        else
+            btnLogout.setVisibility(View.VISIBLE);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            presenter.logout(v);
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            }
+        });
     }
 
     @Override

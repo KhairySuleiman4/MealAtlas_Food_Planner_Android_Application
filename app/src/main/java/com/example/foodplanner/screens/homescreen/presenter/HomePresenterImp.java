@@ -4,6 +4,9 @@ package com.example.foodplanner.screens.homescreen.presenter;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.foodplanner.R;
+import com.google.firebase.auth.FirebaseAuth;
+import androidx.navigation.Navigation;
 import androidx.navigation.Navigation;
 
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
@@ -157,6 +160,12 @@ public class HomePresenterImp implements HomePresenter {
                         )
         );
         //disposable.dispose();
+    }
+
+    @Override
+    public void logout(View v) {
+        FirebaseAuth.getInstance().signOut();
+        Navigation.findNavController(v).navigate(R.id.action_homeScreenFragment_to_welcomeFragment);
     }
 
 

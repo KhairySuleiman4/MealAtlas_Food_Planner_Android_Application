@@ -17,4 +17,12 @@
     <string name="str_view"><![CDATA[View >]]></string>
     <string name="str_youtube">Youtube</string>
     <string name="str_search_meal">Search By Meal</string>
+    <string name="str_guest">Guest</string>
+    <string name="str_login">Log in</string>
+    <string name="str_sign_up">Sign up</string>
+    <string name="str_username">Enter your username here</string>
+    <string name="str_email">Enter your email here</string>
+    <string name="str_password">Enter your password here</string>
+    <string name="str_logout">Log out</string>
+    <string name="client_id">624517895577-6j6j7gb70e2bqna77ejggpa0cmusfv15.apps.googleusercontent.com</string>
 </resources>

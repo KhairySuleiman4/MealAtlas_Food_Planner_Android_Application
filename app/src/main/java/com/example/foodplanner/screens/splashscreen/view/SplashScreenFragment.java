@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens.splashscreen;
+package com.example.foodplanner.screens.splashscreen.view;
 
 import android.os.Bundle;
 
@@ -15,11 +15,12 @@ import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
+import com.example.foodplanner.screens.splashscreen.presenter.SplashPresenterImp;
 
-public class SplashScreenFragment extends Fragment {
-
+public class SplashScreenFragment extends Fragment implements SplashView {
     ImageView ivSplash;
     LottieAnimationView lottieAnimation;
+    SplashPresenterImp presenter;
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -28,7 +29,7 @@ public class SplashScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        presenter = new SplashPresenterImp(this);
     }
 
     @Override
@@ -45,8 +46,17 @@ public class SplashScreenFragment extends Fragment {
         lottieAnimation = view.findViewById(R.id.lottie_animation);
         lottieAnimation.playAnimation();
 
-        new Handler().postDelayed(() -> {
-            Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_welcomeFragment);
-        }, 2200);
+        new Handler().postDelayed(
+                () -> presenter.checkUserAuthentication(), 2200);
+    }
+
+    @Override
+    public void navigateToHome() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_splashScreenFragment_to_homeScreenFragment);
+    }
+
+    @Override
+    public void navigateToWelcome() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_splashScreenFragment_to_welcomeFragment);
     }
 }
