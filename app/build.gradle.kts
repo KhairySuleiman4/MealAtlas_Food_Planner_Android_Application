@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("androidx.navigation.safeargs")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -33,12 +34,12 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.legacy.support.v4)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -47,9 +48,10 @@ dependencies {
     implementation (libs.glide)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
-    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation("io.reactivex.rxjava3:rxjava:3.1.6")
-    implementation("androidx.room:room-rxjava3:2.6.1")
-    implementation("com.airbnb.android:lottie:6.0.0")
+    implementation(libs.rxjava3.retrofit.adapter)
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
+    implementation(libs.room.rxjava3)
+    implementation(libs.lottie)
+    implementation(libs.play.services.auth)
 }

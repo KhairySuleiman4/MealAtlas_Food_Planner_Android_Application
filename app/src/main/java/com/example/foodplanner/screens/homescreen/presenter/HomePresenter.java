@@ -14,4 +14,5 @@ public interface HomePresenter {
     void getMealsByCategory(String category, View v);
     void getMealsByCountry(String country, View v);
     void getMealsByIngredient(String ingredient, View v);
+    void logout(View v);
 }
