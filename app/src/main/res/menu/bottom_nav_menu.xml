@@ -9,4 +9,9 @@
         android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/search" />
+    <item
+        android:id="@+id/favorites"
+        android:title="Favorites"
+        android:icon="@drawable/heart"
+        />
 </menu>

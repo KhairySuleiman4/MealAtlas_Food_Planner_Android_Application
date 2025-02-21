@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 //import com.example.foodplanner.HomeScreenFragmentDirections;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
 import com.example.foodplanner.model.network.category.CategoriesRemoteDataSourceImp;
 import com.example.foodplanner.model.network.category.CategoriesRepositoryImp;
 import com.example.foodplanner.model.network.category.CategoryService;
@@ -89,10 +90,6 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
         btnLogout = view.findViewById(R.id.btn_logout);
         auth = FirebaseAuth.getInstance();
 
-        // public boolean isUserLoggedIn() {
-        //            FirebaseUser user = firebaseAuth.getCurrentUser();
-        //            return user != null;}
-
         if(auth.getCurrentUser() == null)
             isGuest = true;
         else isGuest = false;
@@ -100,7 +97,9 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
         Log.i("TAG", "onViewCreated: " + isGuest);
         presenter = new HomePresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
-                MealsRepositoryImp.getInstance(MealsRemoteDataSourceImp.getInstance()));
+                MealsRepositoryImp.getInstance(
+                        MealsRemoteDataSourceImp.getInstance(),
+                        MealsLocalDataSourceImp.getInstance(getContext())));
 
         categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>(), this);
         countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>(), this);
