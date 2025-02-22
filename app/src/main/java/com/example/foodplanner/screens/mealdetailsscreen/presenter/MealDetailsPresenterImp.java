@@ -1,6 +1,5 @@
 package com.example.foodplanner.screens.mealdetailsscreen.presenter;
 
-import com.example.foodplanner.model.network.meal.MealsRepository;
 import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.model.pojos.Meal;
 import com.example.foodplanner.screens.mealdetailsscreen.view.MealDetailsView;
@@ -64,6 +63,22 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                                         view.mealIsFavorite();
                                     else
                                         view.mealIsNotFavorite();
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
+    }
+
+    @Override
+    public void insertPlannedMeal(Meal meal) {
+        disposable.add(
+                repo.insertPlannedMeal(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    view.showFeedback("Added Successfully!");
                                 }, error -> {
                                     view.showError(error.getMessage());
                                 }

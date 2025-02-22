@@ -1,11 +1,11 @@
 package com.example.foodplanner.screens.mealdetailsscreen.view;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -30,10 +30,12 @@ import com.google.firebase.auth.FirebaseAuth;
 //import com.example.foodplanner.screens.mealdetailsscreen.MealDetailsFragmentArgs;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MealDetailsFragment extends Fragment implements MealDetailsView{
     MealDetailsPresenterImp presenter;
     ImageView ivMealPhoto;
+    Button btnAddToPlan;
     Button btnAddToFavorite;
     TextView tvMealTitle;
     TextView tvMealCate;
@@ -80,6 +82,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         tvInst = view.findViewById(R.id.tv_meal_inst);
         rvMealIngredients = view.findViewById(R.id.rv_meal_ingredients);
         wvYoutube = view.findViewById(R.id.wv_youtube);
+        btnAddToPlan = view.findViewById(R.id.btn_add_to_plan);
 
         auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() == null)
@@ -87,6 +90,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         else isGuest = false;
 
         Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
+
         presenter.checkIsFavorite(meal.getIdMeal());
         btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +98,37 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
                 if(isGuest)
                     Toast.makeText(getContext(), "Login First!", Toast.LENGTH_SHORT).show();
                 else if(btnAddToFavorite.getText().toString().equals(getString(R.string.str_add_to_favorite))){
+                    meal.setFavorite(true);
+                    meal.setDate("");
                     presenter.insertMeal(meal);
                     mealIsFavorite();
                 } else{
                     presenter.deleteMealFromFavorite(meal);
                     mealIsNotFavorite();
+                }
+            }
+        });
+
+        btnAddToPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isGuest)
+                    Toast.makeText(getContext(), "Login First!", Toast.LENGTH_SHORT).show();
+                else{
+                    Calendar today = Calendar.getInstance();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(
+                            getContext(),
+                            (view, year, month, day) -> {
+                                String date = year + "-" + month + "-" + day;
+                                meal.setDate(date);
+                                meal.setFavorite(false);
+                                presenter.insertPlannedMeal(meal);
+                            },
+                            today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)
+                    );
+                    datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+                    datePickerDialog.show();
+
                 }
             }
         });
@@ -217,6 +247,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
 
     @Override
     public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 }

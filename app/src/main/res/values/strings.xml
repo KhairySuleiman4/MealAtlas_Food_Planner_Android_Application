@@ -28,4 +28,6 @@
     <string name="str_add_to_favorite">Add to Favorite</string>
     <string name="str_favorite_meals">Favorite Meals:</string>
     <string name="str_remove_from_favorites">Remove from Favorites</string>
+    <string name="str_add_to_plan">Add to Plan</string>
+    <string name="str_remove">Remove</string>
 </resources>

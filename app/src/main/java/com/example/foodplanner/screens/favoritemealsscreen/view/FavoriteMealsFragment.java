@@ -74,6 +74,11 @@ public class FavoriteMealsFragment extends Fragment implements FavoriteMealsView
     }
 
     @Override
+    public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onRemoveClick(Meal meal) {
         presenter.deleteMeal(meal);
     }

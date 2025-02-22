@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.homeScreenFragment || destination.getId() == R.id.searchFragment || destination.getId() == R.id.favoriteMealsFragment) {
+            if (destination.getId() == R.id.homeScreenFragment || destination.getId() == R.id.searchFragment || destination.getId() == R.id.favoriteMealsFragment || destination.getId() == R.id.planScreenFragment) {
                 bottomNavigationView.setVisibility(View.VISIBLE);
             } else {
                 bottomNavigationView.setVisibility(View.GONE);
@@ -49,6 +49,9 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             } else if (item.getItemId() == R.id.favorites && currentFragmentId != R.id.favoriteMealsFragment) {
                 navController.navigate(R.id.favoriteMealsFragment);
+                return true;
+            } else if (item.getItemId() == R.id.plan && currentFragmentId != R.id.planScreenFragment) {
+                navController.navigate(R.id.planScreenFragment);
                 return true;
             }
             return false;

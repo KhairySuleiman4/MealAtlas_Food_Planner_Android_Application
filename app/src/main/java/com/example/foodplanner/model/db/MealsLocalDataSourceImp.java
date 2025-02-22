@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.core.Single;
 
 public class MealsLocalDataSourceImp implements MealsLocalDataSource{
     private Context context;
-    private FavoriteMealsDAO dao;
+    private MealsDAO dao;
     private static MealsLocalDataSourceImp local = null;
     private Observable<List<Meal>> favMeals;
 
@@ -35,17 +35,31 @@ public class MealsLocalDataSourceImp implements MealsLocalDataSource{
     }
 
     @Override
-    public Completable insertMeal(Meal meal) {
-        return dao.insertMeal(meal);
+    public Completable insertFavMeal(Meal meal) {
+        return dao.insertFavMeal(meal);
     }
 
     @Override
-    public Completable deleteMeal(Meal meal) {
-        return dao.deleteMeal(meal);
+    public Completable deleteFavMeal(Meal meal) {
+        return dao.deleteFavMeal(meal);
     }
 
     @Override
-    public Single<Boolean> doesMealExist(long mealId) {
-        return dao.doesMealExist(mealId);
+    public Single<Boolean> isMealFavorite(long mealId) {
+        return dao.isMealFavorite(mealId);
+    }
+    @Override
+    public Completable insertPlannedMeal(Meal meal) {
+        return dao.insertPlannedMeal(meal);
+    }
+
+    @Override
+    public Completable deletePlannedMeal(Meal meal) {
+        return dao.deletePlannedMeal(meal);
+    }
+
+    @Override
+    public Observable<List<Meal>> getPlannedMeals(String date) {
+        return dao.getPlannedMeals(date);
     }
 }

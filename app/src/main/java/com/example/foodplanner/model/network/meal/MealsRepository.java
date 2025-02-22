@@ -1,6 +1,5 @@
 package com.example.foodplanner.model.network.meal;
 
-import com.example.foodplanner.model.pojos.Category;
 import com.example.foodplanner.model.pojos.Meal;
 
 import java.util.List;
@@ -20,4 +19,7 @@ public interface MealsRepository {
     Completable insertMeal(Meal meal);
     Completable deleteMeal(Meal meal);
     Single<Boolean> doesMealExist(long mealId);
+    Observable<List<Meal>> getPlannedMeals(String dayDate);
+    Completable insertPlannedMeal(Meal meal);
+    Completable deletePlannedMeal(Meal meal);
 }
