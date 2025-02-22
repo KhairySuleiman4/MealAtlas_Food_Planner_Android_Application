@@ -51,6 +51,12 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsViewHolder> {
                 listener.onRemoveClick(meal);
             }
         });
+        holder.ivMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onImageClick(meal);
+            }
+        });
     }
 
     @Override

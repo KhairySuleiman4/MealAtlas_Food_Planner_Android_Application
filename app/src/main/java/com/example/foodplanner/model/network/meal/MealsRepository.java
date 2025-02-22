@@ -19,4 +19,5 @@ public interface MealsRepository {
     Observable<List<Meal>> getFavMeals();
     Completable insertMeal(Meal meal);
     Completable deleteMeal(Meal meal);
+    Single<Boolean> doesMealExist(long mealId);
 }

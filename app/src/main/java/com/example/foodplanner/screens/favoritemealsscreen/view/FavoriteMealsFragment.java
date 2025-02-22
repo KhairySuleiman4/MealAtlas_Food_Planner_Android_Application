@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,5 +76,12 @@ public class FavoriteMealsFragment extends Fragment implements FavoriteMealsView
     @Override
     public void onRemoveClick(Meal meal) {
         presenter.deleteMeal(meal);
+    }
+
+    @Override
+    public void onImageClick(Meal meal) {
+        com.example.foodplanner.screens.favoritemealsscreen.view.FavoriteMealsFragmentDirections.ActionFavoriteMealsFragmentToMealDetailsFragment action =
+                FavoriteMealsFragmentDirections.actionFavoriteMealsFragmentToMealDetailsFragment(meal);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }

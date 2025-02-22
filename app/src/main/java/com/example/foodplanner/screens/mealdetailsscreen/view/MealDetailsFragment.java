@@ -87,14 +87,19 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         else isGuest = false;
 
         Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
-
+        presenter.checkIsFavorite(meal.getIdMeal());
         btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isGuest)
                     Toast.makeText(getContext(), "Login First!", Toast.LENGTH_SHORT).show();
-                else
+                else if(btnAddToFavorite.getText().toString().equals(getString(R.string.str_add_to_favorite))){
                     presenter.insertMeal(meal);
+                    mealIsFavorite();
+                } else{
+                    presenter.deleteMealFromFavorite(meal);
+                    mealIsNotFavorite();
+                }
             }
         });
 
@@ -196,8 +201,18 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     }
 
     @Override
-    public void showAdded(String message) {
+    public void showFeedback(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void mealIsFavorite() {
+        btnAddToFavorite.setText(getString(R.string.str_remove_from_favorites));
+    }
+
+    @Override
+    public void mealIsNotFavorite() {
+        btnAddToFavorite.setText(getString(R.string.str_add_to_favorite));
     }
 
     @Override
