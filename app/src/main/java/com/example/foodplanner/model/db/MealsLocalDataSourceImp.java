@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealsLocalDataSourceImp implements MealsLocalDataSource{
     private Context context;
@@ -41,5 +42,10 @@ public class MealsLocalDataSourceImp implements MealsLocalDataSource{
     @Override
     public Completable deleteMeal(Meal meal) {
         return dao.deleteMeal(meal);
+    }
+
+    @Override
+    public Single<Boolean> doesMealExist(long mealId) {
+        return dao.doesMealExist(mealId);
     }
 }

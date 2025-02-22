@@ -69,4 +69,9 @@ public class MealsRepositoryImp implements MealsRepository{
     public Completable deleteMeal(Meal meal) {
         return local.deleteMeal(meal);
     }
+
+    @Override
+    public Single<Boolean> doesMealExist(long mealId) {
+        return local.doesMealExist(mealId);
+    }
 }

@@ -4,4 +4,5 @@ import com.example.foodplanner.model.pojos.Meal;
 
 public interface OnFavMealClickListener {
     void onRemoveClick(Meal meal);
+    void onImageClick(Meal meal);
 }

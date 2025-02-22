@@ -28,7 +28,42 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 () -> {
-                                    view.showAdded("Added Successfully!");
+                                    view.showFeedback("Added Successfully!");
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
+    }
+
+    @Override
+    public void deleteMealFromFavorite(Meal meal) {
+        disposable.add(
+                repo.deleteMeal(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    view.showFeedback("Deleted Successfully!");
+                                }, error -> {
+                                    view.showError(error.getMessage());
+                                }
+                        )
+        );
+    }
+
+    @Override
+    public void checkIsFavorite(long mealId) {
+        disposable.add(
+                repo.doesMealExist(mealId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                exists -> {
+                                    if(exists)
+                                        view.mealIsFavorite();
+                                    else
+                                        view.mealIsNotFavorite();
                                 }, error -> {
                                     view.showError(error.getMessage());
                                 }
