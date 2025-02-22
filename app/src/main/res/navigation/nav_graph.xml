@@ -119,4 +119,13 @@
             android:id="@+id/action_favoriteMealsFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/planScreenFragment"
+        android:name="com.example.foodplanner.screens.planscreen.view.PlanScreenFragment"
+        android:label="fragment_plan_screen"
+        tools:layout="@layout/fragment_plan_screen" >
+        <action
+            android:id="@+id/action_planScreenFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 </navigation>

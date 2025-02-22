@@ -1,4 +1,4 @@
-package com.example.foodplanner.screens.favoritemealsscreen.view;
+package com.example.foodplanner.screens.planscreen.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,33 +14,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.pojos.Meal;
+//import com.example.foodplanner.screens.favoritemealsscreen.view.FavMealsViewHolder;
+import com.example.foodplanner.screens.favoritemealsscreen.view.OnFavMealClickListener;
 
 import java.util.List;
 
-public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsViewHolder> {
+public class PlannedMealsAdapter extends RecyclerView.Adapter<PlannedMealsViewHolder> {
     private Context context;
-    private List<Meal> favMeals;
-    private OnFavMealClickListener listener;
+    private List<Meal> plannedMeals;
+    private OnPlannedMealClickListener listener;
 
-    public FavMealsAdapter(Context context, List<Meal> favMeals, OnFavMealClickListener listener) {
+    public PlannedMealsAdapter(Context context, List<Meal> plannedMeals, OnPlannedMealClickListener listener) {
         this.context = context;
-        this.favMeals = favMeals;
+        this.plannedMeals = plannedMeals;
         this.listener = listener;
     }
 
-    public void setFavMeals(List<Meal> favMeals) {
-        this.favMeals = favMeals;
+    public void setPlannedMeals(List<Meal> plannedMeals) {
+        this.plannedMeals = plannedMeals;
     }
 
     @NonNull
     @Override
-    public FavMealsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new FavMealsViewHolder(LayoutInflater.from(context).inflate(R.layout.item_stored_meal, viewGroup, false));
+    public PlannedMealsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new PlannedMealsViewHolder(LayoutInflater.from(context).inflate(R.layout.item_stored_meal, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavMealsViewHolder holder, int i) {
-        Meal meal = favMeals.get(i);
+    public void onBindViewHolder(@NonNull PlannedMealsViewHolder holder, int i) {
+        Meal meal = plannedMeals.get(i);
         Glide.with(context)
                 .load(meal.getMealPhoto())
                 .into(holder.ivMeal);
@@ -61,15 +63,15 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsViewHolder> {
 
     @Override
     public int getItemCount() {
-        return favMeals.size();
+        return plannedMeals.size();
     }
 }
 
-class FavMealsViewHolder extends RecyclerView.ViewHolder{
+class PlannedMealsViewHolder extends RecyclerView.ViewHolder{
     ImageView ivMeal;
     TextView tvMeal;
     Button btnRemove;
-    public FavMealsViewHolder(@NonNull View itemView) {
+    public PlannedMealsViewHolder(@NonNull View itemView) {
         super(itemView);
         ivMeal = itemView.findViewById(R.id.iv_favorite_photo);
         tvMeal = itemView.findViewById(R.id.tv_favorite_meal_name);

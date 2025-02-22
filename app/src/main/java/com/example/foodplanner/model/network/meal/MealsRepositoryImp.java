@@ -62,16 +62,32 @@ public class MealsRepositoryImp implements MealsRepository{
 
     @Override
     public Completable insertMeal(Meal meal) {
-        return local.insertMeal(meal);
+        return local.insertFavMeal(meal);
     }
 
     @Override
     public Completable deleteMeal(Meal meal) {
-        return local.deleteMeal(meal);
+        return local.deleteFavMeal(meal);
     }
 
     @Override
     public Single<Boolean> doesMealExist(long mealId) {
-        return local.doesMealExist(mealId);
+        return local.isMealFavorite(mealId);
     }
+
+    @Override
+    public Observable<List<Meal>> getPlannedMeals(String dayDate) {
+        return local.getPlannedMeals(dayDate);
+    }
+
+    @Override
+    public Completable insertPlannedMeal(Meal meal) {
+        return local.insertPlannedMeal(meal);
+    }
+
+    @Override
+    public Completable deletePlannedMeal(Meal meal) {
+        return local.deletePlannedMeal(meal);
+    }
+
 }

@@ -9,11 +9,12 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "favorite_meals")
+@Entity(tableName = "meals")
 public class Meal implements Parcelable {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
+    private int uniqueId;
     private Long idMeal;
     @SerializedName("strMeal")
     private String mealName;
@@ -27,6 +28,8 @@ public class Meal implements Parcelable {
     private String mealInst;
     private String strYoutube;
     private String strIngredient;
+    private String date;
+    private boolean isFavorite;
     @SerializedName("strIngredient1") private String mealIng1;
     @SerializedName("strIngredient2") private String mealIng2;
     @SerializedName("strIngredient3") private String mealIng3;
@@ -69,8 +72,8 @@ public class Meal implements Parcelable {
     @SerializedName("strMeasure19") private String mealMeas19;
     @SerializedName("strMeasure20") private String mealMeas20;
 
-    public Meal(@NonNull Long idMeal, String mealName, String mealPhoto, String mealCate, String mealArea, String mealInst,
-                String strYoutube, String strIngredient,
+    public Meal(@NonNull int uniqueId, Long idMeal, String mealName, String mealPhoto, String mealCate, String mealArea, String mealInst,
+                String strYoutube, String strIngredient, String date, boolean isFavorite,
                 String mealIng1, String mealIng2, String mealIng3, String mealIng4, String mealIng5,
                 String mealIng6, String mealIng7, String mealIng8, String mealIng9, String mealIng10,
                 String mealIng11, String mealIng12, String mealIng13, String mealIng14, String mealIng15,
@@ -79,6 +82,7 @@ public class Meal implements Parcelable {
                 String mealMeas6, String mealMeas7, String mealMeas8, String mealMeas9, String mealMeas10,
                 String mealMeas11, String mealMeas12, String mealMeas13, String mealMeas14, String mealMeas15,
                 String mealMeas16, String mealMeas17, String mealMeas18, String mealMeas19, String mealMeas20) {
+        this.uniqueId = uniqueId;
         this.idMeal = idMeal;
         this.mealName = mealName;
         this.mealPhoto = mealPhoto;
@@ -87,6 +91,8 @@ public class Meal implements Parcelable {
         this.mealInst = mealInst;
         this.strYoutube = strYoutube;
         this.strIngredient = strIngredient;
+        this.date = date;
+        this.isFavorite = isFavorite;
 
         this.mealIng1 = mealIng1;
         this.mealIng2 = mealIng2;
@@ -132,6 +138,7 @@ public class Meal implements Parcelable {
     }
 
     protected Meal(Parcel in) {
+        uniqueId = in.readInt();
         idMeal = in.readLong();
         mealName = in.readString();
         mealPhoto = in.readString();
@@ -140,6 +147,8 @@ public class Meal implements Parcelable {
         mealInst = in.readString();
         strYoutube = in.readString();
         strIngredient = in.readString();
+        date = in.readString();
+        isFavorite = in.readBoolean();
 
         mealIng1 = in.readString();
         mealIng2 = in.readString();
@@ -186,6 +195,7 @@ public class Meal implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(uniqueId);
         dest.writeLong(idMeal);
         dest.writeString(mealName);
         dest.writeString(mealPhoto);
@@ -194,6 +204,8 @@ public class Meal implements Parcelable {
         dest.writeString(mealInst);
         dest.writeString(strYoutube);
         dest.writeString(strIngredient);
+        dest.writeString(date);
+        dest.writeBoolean(isFavorite);
 
         dest.writeString(mealIng1);
         dest.writeString(mealIng2);
@@ -257,6 +269,30 @@ public class Meal implements Parcelable {
 
     public String getStrIngredient() {
         return strIngredient;
+    }
+
+    public int getUniqueId() {
+        return uniqueId;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public void setUniqueId(int uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @NonNull
