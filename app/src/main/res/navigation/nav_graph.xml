@@ -16,7 +16,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashScreenFragment_to_homeScreenFragment"
-            app:destination="@id/homeScreenFragment" />
+            app:destination="@id/homeScreenFragment"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeScreenFragment"
@@ -127,5 +129,16 @@
         <action
             android:id="@+id/action_planScreenFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/needToRegisterFragment"
+        android:name="com.example.foodplanner.screens.NeedToRegisterFragment"
+        android:label="fragment_need_to_register"
+        tools:layout="@layout/fragment_need_to_register" >
+        <action
+            android:id="@+id/action_needToRegisterFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/homeScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
