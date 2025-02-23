@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -100,6 +101,8 @@ public class PlanScreenFragment extends Fragment implements PlanScreenView, OnPl
 
     @Override
     public void onImageClick(Meal meal) {
-
+        com.example.foodplanner.screens.planscreen.view.PlanScreenFragmentDirections.ActionPlanScreenFragmentToMealDetailsFragment action =
+                PlanScreenFragmentDirections.actionPlanScreenFragmentToMealDetailsFragment(meal);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }
