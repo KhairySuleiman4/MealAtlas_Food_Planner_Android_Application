@@ -7,4 +7,5 @@ public interface MealDetailsPresenter {
     void deleteMealFromFavorite(Meal meal);
     void checkIsFavorite(long mealId);
     void insertPlannedMeal(Meal meal);
+    boolean isGuest();
 }

@@ -1,4 +1,4 @@
-package com.example.foodplanner;
+package com.example.foodplanner.screens.homeactivity.view;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -7,29 +7,36 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.example.foodplanner.R;
 
 
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
+import com.example.foodplanner.screens.homeactivity.presenter.HomeActivityPresenter;
+import com.example.foodplanner.screens.homeactivity.presenter.HomeActivityPresenterImp;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity {
-    FirebaseAuth auth;
+public class HomeActivity extends AppCompatActivity implements HomeActivityView {
     boolean isGuest;
+    HomeActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
+        presenter = new HomeActivityPresenterImp(this,
+                MealsRepositoryImp.getInstance(
+                        MealsRemoteDataSourceImp.getInstance(),
+                        MealsLocalDataSourceImp.getInstance(this)));
         FirebaseApp.initializeApp(this);
-        auth = FirebaseAuth.getInstance();
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();
@@ -47,10 +54,8 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(auth.getCurrentUser() == null)
-                    isGuest = true;
-                else isGuest = false;
                 int itemId = item.getItemId();
+                isGuest = presenter.isGuest();
                 if (itemId == R.id.homeScreenFragment || itemId == R.id.searchFragment) {
                     navController.navigate(itemId);
                     return true;

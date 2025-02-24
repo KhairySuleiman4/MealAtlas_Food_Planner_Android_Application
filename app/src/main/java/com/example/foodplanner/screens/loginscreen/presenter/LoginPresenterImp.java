@@ -39,6 +39,7 @@ public class LoginPresenterImp implements LoginPresenter{
         repo.signIn(email, password, (createdEmail, createdPassword, errorMessage) -> {
             if (errorMessage == null) {
                 view.onSuccess(createdEmail, createdPassword);
+                repo.restoreMealsFromFireStore();
             } else {
                 view.onFailure(errorMessage);
             }
@@ -48,6 +49,7 @@ public class LoginPresenterImp implements LoginPresenter{
         repo.handleGoogleSignIn(idToken, (email, password, errorMessage) -> {
             if (errorMessage == null) {
                 view.onSuccess(email, "Google Account");
+                repo.restoreMealsFromFireStore();
             } else {
                 view.onFailure(errorMessage);
             }

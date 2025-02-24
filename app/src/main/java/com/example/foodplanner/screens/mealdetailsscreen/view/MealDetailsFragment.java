@@ -46,7 +46,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     RecyclerView rvMealIngredients;
     WebView wvYoutube;
     Boolean isGuest;
-    FirebaseAuth auth;
 
     public MealDetailsFragment() {
         // Required empty public constructor
@@ -83,11 +82,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         rvMealIngredients = view.findViewById(R.id.rv_meal_ingredients);
         wvYoutube = view.findViewById(R.id.wv_youtube);
         btnAddToPlan = view.findViewById(R.id.btn_add_to_plan);
-
-        auth = FirebaseAuth.getInstance();
-        if(auth.getCurrentUser() == null)
-            isGuest = true;
-        else isGuest = false;
+        isGuest = presenter.isGuest();
 
         Meal meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetails();
 
@@ -128,7 +123,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
                     );
                     datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
                     datePickerDialog.show();
-
                 }
             }
         });
@@ -163,7 +157,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         wvYoutube.loadData(iframeHtml, "text/html", "utf-8");
 
     }
-
     private void storeIngredients(Meal meal) {
         for (int i = 1; i <= 20; i++) {
             String ingredient = getIngredientByIndex(meal, i);
@@ -177,7 +170,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
             measures.add(measure);
         }
     }
-
     private String getIngredientByIndex(Meal meal, int index) {
         switch (index) {
             case 1: return meal.getMealIng1();
@@ -203,7 +195,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
             default: return null;
         }
     }
-
     private String getMeasureByIndex(Meal meal, int index) {
         switch (index) {
             case 1: return meal.getMealMeas1();
@@ -229,22 +220,18 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
             default: return null;
         }
     }
-
     @Override
     public void showFeedback(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void mealIsFavorite() {
         btnAddToFavorite.setText(getString(R.string.str_remove_from_favorites));
     }
-
     @Override
     public void mealIsNotFavorite() {
         btnAddToFavorite.setText(getString(R.string.str_add_to_favorite));
     }
-
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();

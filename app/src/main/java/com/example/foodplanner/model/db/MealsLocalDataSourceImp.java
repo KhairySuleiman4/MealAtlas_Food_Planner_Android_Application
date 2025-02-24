@@ -67,4 +67,9 @@ public class MealsLocalDataSourceImp implements MealsLocalDataSource{
     public Single<Meal> getLastMeal() {
         return dao.getLastMeal();
     }
+
+    @Override
+    public Completable clearAllMeals() {
+        return dao.clearAllMeals();
+    }
 }

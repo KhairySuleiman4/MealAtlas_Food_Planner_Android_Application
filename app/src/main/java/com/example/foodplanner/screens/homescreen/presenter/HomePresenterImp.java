@@ -1,6 +1,7 @@
 package com.example.foodplanner.screens.homescreen.presenter;
 
 //import com.example.foodplanner.model.network.category.CategoriesRepository;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -30,14 +32,12 @@ public class HomePresenterImp implements HomePresenter {
     CategoriesRepositoryImp categoriesRepo;
     MealsRepositoryImp mealsRepo;
     CompositeDisposable disposable;
-
     public HomePresenterImp(HomeView view, CategoriesRepositoryImp categoriesRepo, MealsRepositoryImp mealsRepo) {
         this.view = view;
         this.categoriesRepo = categoriesRepo;
         this.mealsRepo = mealsRepo;
         disposable = new CompositeDisposable();
     }
-
     @Override
     public void getCategories() {
         Single<List<Category>> observable = categoriesRepo.categoryNetworkCall();
@@ -55,7 +55,6 @@ public class HomePresenterImp implements HomePresenter {
         );
         //disposable.dispose();
     }
-
     @Override
     public void getRandomMeal() {
         Single<Meal> observable = mealsRepo.mealNetworkCall();
@@ -72,12 +71,10 @@ public class HomePresenterImp implements HomePresenter {
                 ));
         //disposable.dispose();
     }
-
     @Override
     public void getCountries() {
         view.showAllCountries(CountriesRepositoryImp.getCountries());
     }
-
     @Override
     public void getIngredients() {
         Single<List<Meal>> observable = mealsRepo.ingredientsNetworkCall();
@@ -101,7 +98,6 @@ public class HomePresenterImp implements HomePresenter {
                         ));
         //disposable.dispose();
     }
-
     @Override
     public void getMealsByCategory(String category, View v) {
         Single<List<Meal>> observable = mealsRepo.mealsByCategory(category);
@@ -121,7 +117,6 @@ public class HomePresenterImp implements HomePresenter {
         );
         //disposable.dispose();
     }
-
     @Override
     public void getMealsByCountry(String country, View v) {
         Single<List<Meal>> observable = mealsRepo.mealsByCountry(country);
@@ -141,7 +136,6 @@ public class HomePresenterImp implements HomePresenter {
         );
         //disposable.dispose();
     }
-
     @Override
     public void getMealsByIngredient(String ingredient, View v) {
         Single<List<Meal>> observable = mealsRepo.mealsByIngredient(ingredient);
@@ -161,12 +155,26 @@ public class HomePresenterImp implements HomePresenter {
         );
         //disposable.dispose();
     }
-
     @Override
     public void logout(View v) {
-        FirebaseAuth.getInstance().signOut();
+        disposable.add(
+                mealsRepo.logOut()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    Log.i("TAG", "logout: db cleared");
+                                },
+                                error -> {
+                                    Log.i("TAG", "logout: " + error.getMessage());
+                                }
+                        )
+        );
+        //disposable.dispose()
         Navigation.findNavController(v).navigate(R.id.action_homeScreenFragment_to_welcomeFragment);
     }
-
-
+    @Override
+    public boolean isGuest() {
+        return mealsRepo.isGuest();
+    }
 }

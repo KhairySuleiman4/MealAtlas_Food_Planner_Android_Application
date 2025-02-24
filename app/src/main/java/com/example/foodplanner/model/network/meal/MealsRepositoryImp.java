@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.foodplanner.model.db.MealsLocalDataSource;
 import com.example.foodplanner.model.network.firebase.AuthCallback;
 import com.example.foodplanner.model.network.firebase.Firebase;
+import com.example.foodplanner.model.network.firebase.MealsRestoreCallback;
 import com.example.foodplanner.model.pojos.Meal;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,20 +22,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MealsRepositoryImp implements MealsRepository{
     MealsRemoteDataSource remote;
     MealsLocalDataSource local;
-    FirebaseFirestore firestore;
-    String userId;
     CompositeDisposable disposable;
     Firebase firebase;
-
     private static MealsRepositoryImp repo = null;
-
     private MealsRepositoryImp(MealsRemoteDataSource remote, MealsLocalDataSource local){
         this.remote = remote;
         this.local = local;
-        firestore = FirebaseFirestore.getInstance();
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         disposable = new CompositeDisposable();
-        firebase = new Firebase();
+        firebase = Firebase.getInstance();
     }
 
     public static MealsRepositoryImp getInstance(MealsRemoteDataSource remote, MealsLocalDataSource local){
@@ -112,12 +107,7 @@ public class MealsRepositoryImp implements MealsRepository{
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 meal -> {
-                                    firestore.collection("users")
-                                            .document(userId).collection("meals")
-                                            .document(String.valueOf(meal.getUniqueId()))
-                                            .set(meal)
-                                            .addOnSuccessListener(aVoid -> Log.d("Firestore", "Meal added successfully"))
-                                            .addOnFailureListener(e -> Log.e("Firestore", "Error adding meal", e));
+                                    firebase.addMealToFireStore(meal);
                                 },
                                 error -> {
                                     Log.i("TAG", "addMealToFireStore: " + error.getMessage());
@@ -127,7 +117,43 @@ public class MealsRepositoryImp implements MealsRepository{
     }
     @Override
     public void deleteMealFromFireStore(String mealId) {
-
+        firebase.deleteMealFromFireStore(mealId);
     }
+    @Override
+    public boolean isGuest() {
+        return firebase.isGuest();
+    }
+    @Override
+    public Completable logOut() {
+        firebase.logOut();
+        return local.clearAllMeals();
+    }
+    @Override
+    public void restoreMealsFromFireStore() {
+        firebase.restoreMealsFromFireStore(new MealsRestoreCallback() {
+            @Override
+            public void onMealsRestored(List<Meal> meals) {
+                for (Meal meal : meals) {
+                    disposable.add(
+                            local.insertFavMeal(meal)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            () -> {
+                                                Log.i("TAG", "Meal inserted: " + meal.getMealName());
+                                            }, error -> {
+                                                Log.e("TAG", "Error inserting meal: " + error.getMessage());
+                                            }
+                                    )
+                    );
+                }
+            }
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("RestoreMeals", "Failed to restore meals: " + errorMessage);
+            }
+        });
+    }
+
 
 }
