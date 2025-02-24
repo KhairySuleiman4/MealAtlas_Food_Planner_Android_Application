@@ -28,6 +28,7 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                         .subscribe(
                                 () -> {
                                     view.showFeedback("Added Successfully!");
+                                    repo.addMealToFireStore();
                                 }, error -> {
                                     view.showError(error.getMessage());
                                 }

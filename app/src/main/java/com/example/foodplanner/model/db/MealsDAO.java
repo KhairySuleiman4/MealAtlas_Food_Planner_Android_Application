@@ -29,4 +29,7 @@ public interface MealsDAO {
     Completable deletePlannedMeal(Meal meal);
     @Query("Select * from meals where date = :date")
     Observable<List<Meal>> getPlannedMeals(String date);
+    @Query("SELECT * FROM meals ORDER BY uniqueId DESC LIMIT 1")
+    Single<Meal> getLastMeal();
+
 }

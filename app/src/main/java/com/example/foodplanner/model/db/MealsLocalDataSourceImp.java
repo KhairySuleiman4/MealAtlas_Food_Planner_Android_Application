@@ -62,4 +62,9 @@ public class MealsLocalDataSourceImp implements MealsLocalDataSource{
     public Observable<List<Meal>> getPlannedMeals(String date) {
         return dao.getPlannedMeals(date);
     }
+
+    @Override
+    public Single<Meal> getLastMeal() {
+        return dao.getLastMeal();
+    }
 }
