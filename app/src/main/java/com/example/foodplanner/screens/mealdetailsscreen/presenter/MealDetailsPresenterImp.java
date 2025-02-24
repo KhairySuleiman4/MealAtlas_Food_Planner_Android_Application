@@ -50,8 +50,8 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                                 }
                         )
         );
+        repo.deleteMealFromFireStore(String.valueOf(meal.getUniqueId()));
     }
-
     @Override
     public void checkIsFavorite(long mealId) {
         disposable.add(
@@ -70,7 +70,6 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                         )
         );
     }
-
     @Override
     public void insertPlannedMeal(Meal meal) {
         disposable.add(
@@ -80,10 +79,15 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                         .subscribe(
                                 () -> {
                                     view.showFeedback("Added Successfully!");
+                                    repo.addMealToFireStore();
                                 }, error -> {
                                     view.showError(error.getMessage());
                                 }
                         )
         );
+    }
+    @Override
+    public boolean isGuest() {
+        return repo.isGuest();
     }
 }

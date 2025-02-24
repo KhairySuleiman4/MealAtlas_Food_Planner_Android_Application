@@ -15,4 +15,5 @@ public interface HomePresenter {
     void getMealsByCountry(String country, View v);
     void getMealsByIngredient(String ingredient, View v);
     void logout(View v);
+    boolean isGuest();
 }

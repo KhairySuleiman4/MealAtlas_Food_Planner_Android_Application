@@ -49,5 +49,6 @@ public class PlannedMealsPresenterImp implements PlannedMealsPresenter{
                                 }
                         )
         );
+        repo.deleteMealFromFireStore(String.valueOf(meal.getUniqueId()));
     }
 }

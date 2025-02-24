@@ -52,5 +52,6 @@ public class FavoriteMealsPresenterImp implements FavoriteMealsPresenter{
                                 }
                         )
         );
+        repo.deleteMealFromFireStore(String.valueOf(meal.getUniqueId()));
     }
 }

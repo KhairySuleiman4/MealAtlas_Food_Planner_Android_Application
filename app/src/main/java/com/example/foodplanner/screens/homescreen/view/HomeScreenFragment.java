@@ -49,7 +49,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeScreenFragment extends Fragment implements HomeView, OnItemClickListener {
-
     HomePresenter presenter;
     CategoriesAdapter categoriesAdapter;
     CountriesAdapter countriesAdapter;
@@ -60,7 +59,6 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
     RecyclerView rvCates;
     RecyclerView rvCountries;
     RecyclerView rvIngredients;
-    FirebaseAuth auth;
     boolean isGuest;
 
     public HomeScreenFragment() {
@@ -88,11 +86,6 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
         rvCountries = view.findViewById(R.id.rv_countries);
         rvIngredients = view.findViewById(R.id.rv_ingredients);
         btnLogout = view.findViewById(R.id.btn_logout);
-        auth = FirebaseAuth.getInstance();
-
-        if(auth.getCurrentUser() == null)
-            isGuest = true;
-        else isGuest = false;
 
         Log.i("TAG", "onViewCreated: " + isGuest);
         presenter = new HomePresenterImp(this,
@@ -100,7 +93,7 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
                 MealsRepositoryImp.getInstance(
                         MealsRemoteDataSourceImp.getInstance(),
                         MealsLocalDataSourceImp.getInstance(getContext())));
-
+        isGuest = presenter.isGuest();
         categoriesAdapter = new CategoriesAdapter(getContext(), new ArrayList<>(), this);
         countriesAdapter = new CountriesAdapter(getContext(), new ArrayList<>(), this);
         ingredientsAdapter = new IngredientsAdapter(getContext(), new ArrayList<>(), this);
@@ -133,13 +126,11 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
             }
         });
     }
-
     @Override
     public void showAllCategories(List<Category> categories) {
         categoriesAdapter.setCategories(categories);
         categoriesAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void showRandomMeal(Meal meal) {
         Glide.with(HomeScreenFragment.this)
@@ -155,34 +146,28 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
             }
         });
     }
-
     @Override
     public void showAllCountries(List<Country> countries) {
         countriesAdapter.setCountries(countries);
         countriesAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void showAllIngredients(List<String> ingredients) {
         ingredientsAdapter.setIngredients(ingredients);
         ingredientsAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onCategoryClick(String category) {
         presenter.getMealsByCategory(category, requireView());
     }
-
     @Override
     public void onCountryClick(String country) {
         presenter.getMealsByCountry(country, requireView());
     }
-
     @Override
     public void onIngredientClick(String ingredient) {
         presenter.getMealsByIngredient(ingredient, requireView());

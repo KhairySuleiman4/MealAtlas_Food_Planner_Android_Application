@@ -31,5 +31,6 @@ public interface MealsDAO {
     Observable<List<Meal>> getPlannedMeals(String date);
     @Query("SELECT * FROM meals ORDER BY uniqueId DESC LIMIT 1")
     Single<Meal> getLastMeal();
-
+    @Query("DELETE from meals")
+    Completable clearAllMeals();
 }

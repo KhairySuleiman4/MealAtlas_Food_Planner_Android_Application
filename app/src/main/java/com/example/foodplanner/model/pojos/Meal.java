@@ -72,6 +72,10 @@ public class Meal implements Parcelable {
     @SerializedName("strMeasure19") private String mealMeas19;
     @SerializedName("strMeasure20") private String mealMeas20;
 
+    public Meal(){
+
+    }
+
     public Meal(@NonNull int uniqueId, Long idMeal, String mealName, String mealPhoto, String mealCate, String mealArea, String mealInst,
                 String strYoutube, String strIngredient, String date, boolean isFavorite,
                 String mealIng1, String mealIng2, String mealIng3, String mealIng4, String mealIng5,

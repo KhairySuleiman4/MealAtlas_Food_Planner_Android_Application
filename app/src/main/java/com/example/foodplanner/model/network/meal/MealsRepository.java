@@ -24,4 +24,7 @@ public interface MealsRepository {
     Completable deletePlannedMeal(Meal meal);
     void addMealToFireStore();
     void deleteMealFromFireStore(String mealId);
+    boolean isGuest();
+    Completable logOut();
+    void restoreMealsFromFireStore();
 }
