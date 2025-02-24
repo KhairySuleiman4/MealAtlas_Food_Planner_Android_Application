@@ -1,22 +1,17 @@
 package com.example.foodplanner.screens.signupscreen.presenter;
 
-import android.text.TextUtils;
-
-import androidx.annotation.NonNull;
-
+import com.example.foodplanner.model.network.firebase.AuthCallback;
+import com.example.foodplanner.model.network.firebase.Firebase;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.screens.signupscreen.view.SignUpView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpPresenterImp implements SignUpPresenter{
     SignUpView view;
-    FirebaseAuth auth;
-    public SignUpPresenterImp(SignUpView view) {
+    MealsRepositoryImp repo;
+    public SignUpPresenterImp(SignUpView view, MealsRepositoryImp repo) {
         this.view = view;
-        auth = FirebaseAuth.getInstance();
+        this.repo = repo;
     }
     @Override
     public void giveCredentials(String email, String password) {
@@ -35,17 +30,12 @@ public class SignUpPresenterImp implements SignUpPresenter{
             return;
         }
 
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            view.onSuccess(email, password);
-                        } else {
-                            view.onFailure(task.getException().getMessage());
-                        }
-                    }
-                });
+        repo.createAccount(email, password, (createdEmail, createdPassword, errorMessage) -> {
+            if (errorMessage == null) {
+                view.onSuccess(createdEmail, createdPassword);
+            } else {
+                view.onFailure(errorMessage);
+            }
+        });
     }
 }

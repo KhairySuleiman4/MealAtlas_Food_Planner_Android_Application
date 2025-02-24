@@ -56,4 +56,6 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
 }

@@ -18,4 +18,6 @@ public interface MealsLocalDataSource {
     Completable insertPlannedMeal(Meal meal);
     Completable deletePlannedMeal(Meal meal);
     Observable<List<Meal>> getPlannedMeals(String date);
+    Single<Meal> getLastMeal();
+
 }

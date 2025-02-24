@@ -22,4 +22,6 @@ public interface MealsRepository {
     Observable<List<Meal>> getPlannedMeals(String dayDate);
     Completable insertPlannedMeal(Meal meal);
     Completable deletePlannedMeal(Meal meal);
+    void addMealToFireStore();
+    void deleteMealFromFireStore(String mealId);
 }

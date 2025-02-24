@@ -18,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.screens.loginscreen.presenter.LoginPresenterImp;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -61,7 +64,9 @@ public class LoginFragment extends Fragment implements LoginView{
         etLoginPassword = view.findViewById(R.id.et_login_password);
         ivGoogle = view.findViewById(R.id.iv_google);
 
-        presenter = new LoginPresenterImp(this);
+        presenter = new LoginPresenterImp(this, MealsRepositoryImp.getInstance(
+                MealsRemoteDataSourceImp.getInstance(),
+                MealsLocalDataSourceImp.getInstance(getContext())));
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.client_id))

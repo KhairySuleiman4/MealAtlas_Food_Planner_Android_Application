@@ -30,4 +30,6 @@
     <string name="str_remove_from_favorites">Remove from Favorites</string>
     <string name="str_add_to_plan">Add to Plan</string>
     <string name="str_remove">Remove</string>
+    <string name="str_login_first" >Register First!</string>
+    <string name="str_register">Register</string>
 </resources>

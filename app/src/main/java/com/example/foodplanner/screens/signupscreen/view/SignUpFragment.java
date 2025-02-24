@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.db.MealsLocalDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRemoteDataSourceImp;
+import com.example.foodplanner.model.network.meal.MealsRepositoryImp;
 import com.example.foodplanner.screens.signupscreen.presenter.SignUpPresenterImp;
 
 public class SignUpFragment extends Fragment implements SignUpView{
@@ -47,7 +50,9 @@ public class SignUpFragment extends Fragment implements SignUpView{
         etSignUpEmail = view.findViewById(R.id.et_sign_up_email);
         etSignUpPassword = view.findViewById(R.id.et_sign_password);
 
-        presenter = new SignUpPresenterImp(this);
+        presenter = new SignUpPresenterImp(this, MealsRepositoryImp.getInstance(
+                MealsRemoteDataSourceImp.getInstance(),
+                MealsLocalDataSourceImp.getInstance(getContext())));
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
