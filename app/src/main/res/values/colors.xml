@@ -5,4 +5,27 @@
     <color name="grey">#808080</color>
     <color name="green">#00FF00</color>
     <color name="light_grey">#BDB8B8</color>
+    <color name="grey_background">#DADADA</color>
+
+    <color name="primary">#022e4f</color>
+    <color name="on_primary">#ffffff</color>
+
+    <color name="secondary">#535f6f</color>
+    <color name="on_secondary">#ffffff</color>
+
+    <color name="tertiary">#3f2044</color>
+    <color name="on_tertiary">#ffffff</color>
+
+    <color name="error">#ba1a1a</color>
+    <color name="on_error">#ffffff</color>
+
+    <color name="primary_container">#214467</color>
+    <color name="on_primary_container">#90b1da</color>
+
+    <color name="secondary_container">#d4e1f3</color>
+    <color name="on_secondary_container">#586473</color>
+
+    <color name="tertiary_container">#57365c</color>
+    <color name="on_tertiary_container">#cba1ce</color>
+
 </resources>

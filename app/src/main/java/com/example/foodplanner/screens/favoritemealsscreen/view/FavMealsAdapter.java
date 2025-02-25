@@ -68,7 +68,7 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsViewHolder> {
 class FavMealsViewHolder extends RecyclerView.ViewHolder{
     ImageView ivMeal;
     TextView tvMeal;
-    Button btnRemove;
+    ImageView btnRemove;
     public FavMealsViewHolder(@NonNull View itemView) {
         super(itemView);
         ivMeal = itemView.findViewById(R.id.iv_favorite_photo);

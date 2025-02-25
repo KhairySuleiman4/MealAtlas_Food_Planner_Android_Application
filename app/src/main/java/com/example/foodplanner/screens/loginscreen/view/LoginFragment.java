@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment implements LoginView{
     EditText etLoginPassword;
     Button btnLogin;
     TextView tvSignUp;
-    ImageView ivGoogle;
+    Button ivGoogle;
     GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 9001;
 
