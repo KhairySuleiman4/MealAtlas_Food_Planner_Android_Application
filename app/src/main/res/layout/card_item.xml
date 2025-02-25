@@ -9,13 +9,14 @@
     app:cardElevation="4dp"
     app:strokeColor="@color/primary"
     app:strokeWidth="1.5dp"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="12dp" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:padding="16dp">
+        android:padding="16dp" >
+
         <ImageView
             android:id="@+id/iv_card_item"
             android:layout_width="100dp"
@@ -23,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/loading"
             android:layout_margin="4dp"
             />
 
@@ -33,9 +35,10 @@
             android:textSize="20sp"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
+            android:text="@string/str_text_view"
             app:layout_constraintTop_toBottomOf="@+id/iv_card_item"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_card_item"
+            app:layout_constraintStart_toStartOf="@+id/iv_card_item"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
