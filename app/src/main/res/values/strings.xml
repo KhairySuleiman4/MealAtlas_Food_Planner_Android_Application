@@ -32,4 +32,8 @@
     <string name="str_remove">Remove</string>
     <string name="str_login_first" >Register First!</string>
     <string name="str_register">Register</string>
+    <string name="str_welcome">Welcome to MealAtlas</string>
+    <string name="str_skip">Skip</string>
+    <string name="str_signin_google">Sign in with Google</string>
+    <string name="str_first_time">Your First Time?</string>
 </resources>

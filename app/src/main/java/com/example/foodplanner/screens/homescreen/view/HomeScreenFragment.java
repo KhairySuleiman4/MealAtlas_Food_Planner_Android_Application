@@ -53,7 +53,7 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
     CategoriesAdapter categoriesAdapter;
     CountriesAdapter countriesAdapter;
     IngredientsAdapter ingredientsAdapter;
-    Button btnLogout;
+    ImageView btnLogout;
     ImageView ivMealPhoto;
     TextView tvMealName;
     RecyclerView rvCates;

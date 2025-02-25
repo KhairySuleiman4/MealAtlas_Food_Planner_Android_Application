@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/iv_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-45dp"
-        android:src="@drawable/logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,8 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="64dp"
+        android:background="@drawable/edit_text"
         android:ems="10"
+        android:hint="@string/str_email"
         android:inputType="text"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_login" />
@@ -31,40 +34,64 @@
         android:id="@+id/et_login_password"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/edit_text"
         android:ems="10"
-        android:inputType="text"
+        android:hint="@string/str_password"
+        android:padding="8dp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/et_login_email"
         app:layout_constraintStart_toStartOf="@+id/et_login_email"
         app:layout_constraintTop_toBottomOf="@+id/et_login_email" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
         android:text="@string/str_login"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/et_login_password"
-        app:layout_constraintStart_toStartOf="@+id/et_login_password"
+        app:layout_constraintEnd_toEndOf="@+id/iv_login"
+        app:layout_constraintStart_toStartOf="@+id/iv_login"
         app:layout_constraintTop_toBottomOf="@+id/et_login_password" />
 
     <TextView
         android:id="@+id/tv_to_sign_up_from_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/str_sign_up"
+        android:textColor="@color/primary"
         android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="@+id/et_login_password"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/str_first_time"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/et_login_password"
+        app:layout_constraintTop_toBottomOf="@+id/iv_google" />
+
+    <Button
+        android:id="@+id/iv_google"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/poppins"
+        android:text="@string/str_signin_google"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:icon="@drawable/google"
+        app:iconTint="@null"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
-    <ImageView
-        android:id="@+id/iv_google"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/google"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_to_sign_up_from_login"
-        app:layout_constraintStart_toStartOf="@+id/et_login_password"
-        app:layout_constraintTop_toTopOf="@+id/tv_to_sign_up_from_login" />
 </androidx.constraintlayout.widget.ConstraintLayout>

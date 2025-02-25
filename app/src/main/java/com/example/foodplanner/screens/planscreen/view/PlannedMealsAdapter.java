@@ -70,7 +70,7 @@ public class PlannedMealsAdapter extends RecyclerView.Adapter<PlannedMealsViewHo
 class PlannedMealsViewHolder extends RecyclerView.ViewHolder{
     ImageView ivMeal;
     TextView tvMeal;
-    Button btnRemove;
+    ImageView btnRemove;
     public PlannedMealsViewHolder(@NonNull View itemView) {
         super(itemView);
         ivMeal = itemView.findViewById(R.id.iv_favorite_photo);
