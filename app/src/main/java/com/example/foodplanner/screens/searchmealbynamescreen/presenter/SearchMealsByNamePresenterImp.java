@@ -27,13 +27,11 @@ public class SearchMealsByNamePresenterImp implements SearchMealByNamePresenter{
     SearchMealByNameView view;
     CompositeDisposable disposable;
     MealsRepositoryImp repo;
-
     public SearchMealsByNamePresenterImp(SearchMealByNameView view, MealsRepositoryImp repo) {
         this.view = view;
         this.repo = repo;
         disposable = new CompositeDisposable();
     }
-
     @Override
     public void observeSearch(EditText etSearch, Meal[] meals) {
         Observable<String> observable = Observable.create(emitter -> {
@@ -69,10 +67,9 @@ public class SearchMealsByNamePresenterImp implements SearchMealByNamePresenter{
                         )
         );
     }
-
     @Override
-    public void getMealByName(String name, View v) {
-        Single<Meal> call = repo.mealByName(name);
+    public void getMealById(long mealId, View v) {
+        Single<Meal> call = repo.getMealById(mealId);
         disposable.add(
                 call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,5 +83,9 @@ public class SearchMealsByNamePresenterImp implements SearchMealByNamePresenter{
                         }
                 )
         );
+    }
+    @Override
+    public void closeDisposable() {
+        disposable.dispose();
     }
 }

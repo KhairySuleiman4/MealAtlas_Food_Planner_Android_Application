@@ -44,7 +44,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchFragment extends Fragment implements SearchView, OnItemClickListener {
-
     ChipGroup chipGroup;
     Chip cateChip;
     Chip countryChip;
@@ -55,23 +54,21 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
     IngredientsFilterAdapter ingredientsAdapter;
     SearchPresenter presenter;
     EditText etSearch;
+    View v;
 
     public SearchFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,7 +78,7 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
         countryChip = view.findViewById(R.id.chip_areas);
         ingredientsChip = view.findViewById(R.id.chip_ingredients);
         etSearch = view.findViewById(R.id.et_search);
-
+        v = view;
         chipGroup.setSingleSelection(true);
         cateChip.setCheckable(true);
         countryChip.setCheckable(true);
@@ -133,60 +130,56 @@ public class SearchFragment extends Fragment implements SearchView, OnItemClickL
             }
         });
     }
-
     @Override
     public void showAllCategories(List<Category> categories) {
         categoriesAdapter.setCategories(categories);
         presenter.observeCategorySearch(etSearch, categories);
         categoriesAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void showAllCountries(List<Country> countries) {
         countriesAdapter.setCountries(countries);
         presenter.observeCountrySearch(etSearch, countries);
         countriesAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void showAllIngredients(List<String> ingredients) {
         ingredientsAdapter.setIngredients(ingredients);
         presenter.observeIngredientSearch(etSearch, ingredients);
         ingredientsAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void updateCategoriesResults(List<Category> categories) {
         rvFilter.setAdapter(new CategoriesFilterAdapter(getContext(), categories, this));
     }
-
     @Override
     public void updateCountriesResults(List<Country> countries) {
         rvFilter.setAdapter(new CountriesFilterAdapter(getContext(), countries, this));
     }
-
     @Override
     public void updateIngredientsResults(List<String> ingredients) {
         rvFilter.setAdapter(new IngredientsFilterAdapter(getContext(), ingredients, this));
     }
-
     @Override
     public void showError(String error) {
-        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Check your Internet Connection!", Toast.LENGTH_SHORT).show();
+        v.setVisibility(View.GONE);
     }
-
     @Override
     public void onCategoryClick(String category) {
         presenter.getMealsByCategory(category, requireView());
     }
-
     @Override
     public void onCountryClick(String country) {
         presenter.getMealsByCountry(country, requireView());
     }
-
     @Override
     public void onIngredientClick(String ingredient) {
         presenter.getMealsByIngredient(ingredient, requireView());
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.closeDisposable();
     }
 }

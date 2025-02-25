@@ -14,7 +14,7 @@ public interface MealsRepository {
     Single<List<Meal>> mealsByCategory(String category);
     Single<List<Meal>> mealsByCountry(String country);
     Single<List<Meal>> mealsByIngredient(String ingredient);
-    Single<Meal> mealByName(String mealName);
+    Single<Meal> getMealById(long mealId);
     Observable<List<Meal>> getFavMeals();
     Completable insertMeal(Meal meal);
     Completable deleteMeal(Meal meal);

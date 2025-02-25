@@ -38,19 +38,16 @@ public class PlanScreenFragment extends Fragment implements PlanScreenView, OnPl
     public PlanScreenFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_plan_screen, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -77,32 +74,32 @@ public class PlanScreenFragment extends Fragment implements PlanScreenView, OnPl
                 }
         );
     }
-
     @Override
     public void showPlannedMeals(List<Meal> meals) {
         adapter.setPlannedMeals(meals);
         adapter.notifyDataSetChanged();
     }
-
     @Override
     public void showDeleted(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onRemoveClick(Meal meal) {
         presenter.deleteMeal(meal);
     }
-
     @Override
     public void onImageClick(Meal meal) {
         com.example.foodplanner.screens.planscreen.view.PlanScreenFragmentDirections.ActionPlanScreenFragmentToMealDetailsFragment action =
                 PlanScreenFragmentDirections.actionPlanScreenFragmentToMealDetailsFragment(meal);
         Navigation.findNavController(requireView()).navigate(action);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.closeDisposable();
     }
 }

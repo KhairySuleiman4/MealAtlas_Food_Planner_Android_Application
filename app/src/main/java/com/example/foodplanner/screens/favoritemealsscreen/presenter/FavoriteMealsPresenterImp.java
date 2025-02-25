@@ -12,17 +12,14 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FavoriteMealsPresenterImp implements FavoriteMealsPresenter{
-
     FavoriteMealsView view;
     MealsRepositoryImp repo;
     CompositeDisposable disposable;
-
     public FavoriteMealsPresenterImp(FavoriteMealsView view, MealsRepositoryImp repo) {
         this.view = view;
         this.repo = repo;
         disposable = new CompositeDisposable();
     }
-
     @Override
     public void getFavMeals() {
         disposable.add(
@@ -37,7 +34,6 @@ public class FavoriteMealsPresenterImp implements FavoriteMealsPresenter{
                         )
         );
     }
-
     @Override
     public void deleteMeal(Meal meal) {
         disposable.add(
@@ -53,5 +49,9 @@ public class FavoriteMealsPresenterImp implements FavoriteMealsPresenter{
                         )
         );
         repo.deleteMealFromFireStore(String.valueOf(meal.getUniqueId()));
+    }
+    @Override
+    public void closeDisposable() {
+        disposable.dispose();
     }
 }

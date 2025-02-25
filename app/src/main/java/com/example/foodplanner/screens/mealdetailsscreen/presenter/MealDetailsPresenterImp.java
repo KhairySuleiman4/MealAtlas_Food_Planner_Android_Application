@@ -12,13 +12,11 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
     MealDetailsView view;
     MealsRepositoryImp repo;
     CompositeDisposable disposable;
-
     public MealDetailsPresenterImp(MealDetailsView view, MealsRepositoryImp repo) {
         this.view = view;
         this.repo = repo;
         disposable = new CompositeDisposable();
     }
-
     @Override
     public void insertMeal(Meal meal) {
         disposable.add(
@@ -35,7 +33,6 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
                         )
         );
     }
-
     @Override
     public void deleteMealFromFavorite(Meal meal) {
         disposable.add(
@@ -89,5 +86,9 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
     @Override
     public boolean isGuest() {
         return repo.isGuest();
+    }
+    @Override
+    public void closeDisposable() {
+        disposable.dispose();
     }
 }

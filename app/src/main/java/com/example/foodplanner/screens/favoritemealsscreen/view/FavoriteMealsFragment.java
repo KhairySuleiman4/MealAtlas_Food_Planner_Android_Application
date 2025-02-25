@@ -33,20 +33,17 @@ public class FavoriteMealsFragment extends Fragment implements FavoriteMealsView
     public FavoriteMealsFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite_meals, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,32 +58,32 @@ public class FavoriteMealsFragment extends Fragment implements FavoriteMealsView
         rvFavMeals.setAdapter(adapter);
         presenter.getFavMeals();
     }
-
     @Override
     public void showFavMeals(List<Meal> meals) {
         adapter.setFavMeals(meals);
         adapter.notifyDataSetChanged();
     }
-
     @Override
     public void showDeleted(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onRemoveClick(Meal meal) {
         presenter.deleteMeal(meal);
     }
-
     @Override
     public void onImageClick(Meal meal) {
         com.example.foodplanner.screens.favoritemealsscreen.view.FavoriteMealsFragmentDirections.ActionFavoriteMealsFragmentToMealDetailsFragment action =
                 FavoriteMealsFragmentDirections.actionFavoriteMealsFragmentToMealDetailsFragment(meal);
         Navigation.findNavController(requireView()).navigate(action);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.closeDisposable();
     }
 }

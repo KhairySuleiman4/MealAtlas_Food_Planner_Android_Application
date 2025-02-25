@@ -18,4 +18,5 @@ public interface SearchPresenter {
     void observeCategorySearch(EditText etSearch, List<Category> categories);
     void observeCountrySearch(EditText etSearch, List<Country> countries);
     void observeIngredientSearch(EditText etSearch, List<String> ingredients);
+    void closeDisposable();
 }

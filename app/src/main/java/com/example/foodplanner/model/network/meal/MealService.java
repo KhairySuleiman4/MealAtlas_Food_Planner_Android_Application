@@ -18,6 +18,6 @@ public interface MealService {
     Single<MealResponse> getMealsByCountry(@Query("a") String country);
     @GET("filter.php")
     Single<MealResponse> getMealsByIngredient(@Query("i") String ingredient);
-    @GET("search.php")
-    Single<MealResponse> getMealByName(@Query("s") String mealName);
+    @GET("lookup.php")
+    Single<MealResponse> getMealById(@Query("i") long mealId);
 }

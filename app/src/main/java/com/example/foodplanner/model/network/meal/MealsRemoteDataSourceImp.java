@@ -63,8 +63,8 @@ public class MealsRemoteDataSourceImp implements MealsRemoteDataSource{
     }
 
     @Override
-    public Single<Meal> mealByName(String mealName) {
-        Single<MealResponse> call = mealService.getMealByName(mealName);
+    public Single<Meal> getMealById(long mealId) {
+        Single<MealResponse> call = mealService.getMealById(mealId);
         return call.map(l -> l.getMeals().get(0));
     }
 }

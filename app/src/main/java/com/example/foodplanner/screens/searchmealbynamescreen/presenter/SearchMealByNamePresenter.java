@@ -7,5 +7,6 @@ import com.example.foodplanner.model.pojos.Meal;
 
 public interface SearchMealByNamePresenter {
     void observeSearch(EditText etSearch, Meal[] meals);
-    void getMealByName(String name, View view);
+    void getMealById(long mealId, View view);
+    void closeDisposable();
 }

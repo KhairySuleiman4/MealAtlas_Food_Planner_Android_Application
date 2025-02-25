@@ -12,13 +12,11 @@ public class PlannedMealsPresenterImp implements PlannedMealsPresenter{
     PlanScreenView view;
     MealsRepositoryImp repo;
     CompositeDisposable disposable;
-
     public PlannedMealsPresenterImp(PlanScreenView view, MealsRepositoryImp repo) {
         this.view = view;
         this.repo = repo;
         disposable = new CompositeDisposable();
     }
-
     @Override
     public void getPlannedMeals(String day) {
         disposable.add(
@@ -34,7 +32,6 @@ public class PlannedMealsPresenterImp implements PlannedMealsPresenter{
                         )
         );
     }
-
     @Override
     public void deleteMeal(Meal meal) {
         disposable.add(
@@ -50,5 +47,9 @@ public class PlannedMealsPresenterImp implements PlannedMealsPresenter{
                         )
         );
         repo.deleteMealFromFireStore(String.valueOf(meal.getUniqueId()));
+    }
+    @Override
+    public void closeDisposable() {
+        disposable.dispose();
     }
 }

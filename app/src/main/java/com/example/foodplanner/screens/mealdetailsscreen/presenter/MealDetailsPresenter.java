@@ -8,4 +8,5 @@ public interface MealDetailsPresenter {
     void checkIsFavorite(long mealId);
     void insertPlannedMeal(Meal meal);
     boolean isGuest();
+    void closeDisposable();
 }

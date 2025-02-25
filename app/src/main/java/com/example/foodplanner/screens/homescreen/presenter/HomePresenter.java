@@ -16,4 +16,5 @@ public interface HomePresenter {
     void getMealsByIngredient(String ingredient, View v);
     void logout(View v);
     boolean isGuest();
+    void closeDisposable();
 }
