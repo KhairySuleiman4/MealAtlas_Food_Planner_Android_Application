@@ -60,22 +60,20 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
     RecyclerView rvCountries;
     RecyclerView rvIngredients;
     boolean isGuest;
+    View v;
 
     public HomeScreenFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home_screen, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -86,7 +84,7 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
         rvCountries = view.findViewById(R.id.rv_countries);
         rvIngredients = view.findViewById(R.id.rv_ingredients);
         btnLogout = view.findViewById(R.id.btn_logout);
-
+        v = view;
         Log.i("TAG", "onViewCreated: " + isGuest);
         presenter = new HomePresenterImp(this,
                 CategoriesRepositoryImp.getInstance(CategoriesRemoteDataSourceImp.getInstance()),
@@ -158,7 +156,8 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
     }
     @Override
     public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Check your Internet Connection!", Toast.LENGTH_SHORT).show();
+        v.setVisibility(View.GONE);
     }
     @Override
     public void onCategoryClick(String category) {
@@ -171,5 +170,10 @@ public class HomeScreenFragment extends Fragment implements HomeView, OnItemClic
     @Override
     public void onIngredientClick(String ingredient) {
         presenter.getMealsByIngredient(ingredient, requireView());
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.closeDisposable();
     }
 }

@@ -95,6 +95,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
                 else if(btnAddToFavorite.getText().toString().equals(getString(R.string.str_add_to_favorite))){
                     meal.setFavorite(true);
                     meal.setDate("");
+                    meal.setUniqueId(0);
                     presenter.insertMeal(meal);
                     mealIsFavorite();
                 } else{
@@ -117,6 +118,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
                                 String date = year + "-" + month + "-" + day;
                                 meal.setDate(date);
                                 meal.setFavorite(false);
+                                meal.setUniqueId(0);
                                 presenter.insertPlannedMeal(meal);
                             },
                             today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)
@@ -235,5 +237,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.closeDisposable();
     }
 }

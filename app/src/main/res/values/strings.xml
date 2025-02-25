@@ -10,7 +10,7 @@
     <string name="str_meal_category">Category</string>
     <string name="str_meal_area">Area</string>
     <string name="str_meal_instructions">Instructions</string>
-    <string name="str_text_view">TextView</string>
+    <string name="str_text_view">Loading ..</string>
     <string name="str_ingredients">Ingredients</string>
     <string name="str_view_meal">View Meal</string>
     <string name="str_desc">Discreption</string>

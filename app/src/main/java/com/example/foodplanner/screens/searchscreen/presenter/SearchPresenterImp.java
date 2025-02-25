@@ -34,16 +34,13 @@ public class SearchPresenterImp implements SearchPresenter {
     CategoriesRepositoryImp categoriesRepo;
     MealsRepositoryImp mealsRepo;
     private TextWatcher currentTextWatcher;
-
     CompositeDisposable disposable;
-
     public SearchPresenterImp(SearchView view, CategoriesRepositoryImp categoriesRepo, MealsRepositoryImp mealsRepo) {
         this.view = view;
         this.categoriesRepo = categoriesRepo;
         this.mealsRepo = mealsRepo;
         disposable = new CompositeDisposable();
     }
-
     @Override
     public void getCategories() {
         Single<List<Category>> observable = categoriesRepo.categoryNetworkCall();
@@ -59,14 +56,11 @@ public class SearchPresenterImp implements SearchPresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
-
     @Override
     public void getCountries() {
         view.showAllCountries(CountriesRepositoryImp.getCountries());
     }
-
     @Override
     public void getIngredients() {
         Single<List<Meal>> observable = mealsRepo.ingredientsNetworkCall();
@@ -88,9 +82,7 @@ public class SearchPresenterImp implements SearchPresenter {
                                     view.showError(error.getMessage());
                                 }
                         ));
-        //disposable.dispose();
     }
-
     @Override
     public void getMealsByCategory(String category, View v) {
         Single<List<Meal>> observable = mealsRepo.mealsByCategory(category);
@@ -108,9 +100,7 @@ public class SearchPresenterImp implements SearchPresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
-
     @Override
     public void getMealsByCountry(String country, View v) {
         Single<List<Meal>> observable = mealsRepo.mealsByCountry(country);
@@ -128,9 +118,7 @@ public class SearchPresenterImp implements SearchPresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
-
     @Override
     public void getMealsByIngredient(String ingredient, View v) {
         Single<List<Meal>> observable = mealsRepo.mealsByIngredient(ingredient);
@@ -148,9 +136,7 @@ public class SearchPresenterImp implements SearchPresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
-
     @Override
     public void observeCategorySearch(EditText etSearch, List<Category> categories) {
         setSearchObserver(etSearch, categories, query -> {
@@ -159,9 +145,7 @@ public class SearchPresenterImp implements SearchPresenter {
                     .collect(Collectors.toList());
             view.updateCategoriesResults(filteredList);
         });
-        //disposable.dispose();
     }
-
     @Override
     public void observeCountrySearch(EditText etSearch, List<Country> countries) {
         setSearchObserver(etSearch, countries, query -> {
@@ -170,9 +154,7 @@ public class SearchPresenterImp implements SearchPresenter {
                     .collect(Collectors.toList());
             view.updateCountriesResults(filteredList);
         });
-        //disposable.dispose();
     }
-
     @Override
     public void observeIngredientSearch(EditText etSearch, List<String> ingredients) {
         setSearchObserver(etSearch, ingredients, query -> {
@@ -181,32 +163,25 @@ public class SearchPresenterImp implements SearchPresenter {
                     .collect(Collectors.toList());
             view.updateIngredientsResults(filteredList);
         });
-        //disposable.dispose();
     }
-
-
     private void setSearchObserver(EditText etSearch, List<?> items, SearchObserver observer) {
         if (currentTextWatcher != null) {
             etSearch.removeTextChangedListener(currentTextWatcher);
         }
-
         currentTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 observer.onSearchQuery(s.toString().toLowerCase());
             }
-
             @Override
             public void afterTextChanged(Editable s) {}
         };
-
         etSearch.addTextChangedListener(currentTextWatcher);
     }
-
-    private interface SearchObserver {
-        void onSearchQuery(String query);
+    @Override
+    public void closeDisposable() {
+        disposable.dispose();
     }
 }

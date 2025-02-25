@@ -41,7 +41,7 @@ public class MealsLocalDataSourceImp implements MealsLocalDataSource{
 
     @Override
     public Completable deleteFavMeal(Meal meal) {
-        return dao.deleteFavMeal(meal);
+        return dao.deleteFavMealById(String.valueOf(meal.getIdMeal()));
     }
 
     @Override

@@ -19,8 +19,8 @@ public interface MealsDAO {
     Observable<List<Meal>> getFavMeals();
     @Insert
     Completable insertFavMeal(Meal meal);
-    @Delete
-    Completable deleteFavMeal(Meal meal);
+    @Query("DELETE FROM meals WHERE idMeal = :idMeal AND isFavorite = 1")
+    Completable deleteFavMealById(String idMeal);
     @Query("Select exists(Select 1 from meals where idMeal = :mealId and isFavorite = 1)")
     Single<Boolean> isMealFavorite(long mealId);
     @Insert

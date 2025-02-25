@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "meals")
 public class Meal implements Parcelable {
-
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int uniqueId;

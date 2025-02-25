@@ -53,7 +53,6 @@ public class HomePresenterImp implements HomePresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
     @Override
     public void getRandomMeal() {
@@ -69,7 +68,6 @@ public class HomePresenterImp implements HomePresenter {
                             view.showError(error.getMessage());
                         }
                 ));
-        //disposable.dispose();
     }
     @Override
     public void getCountries() {
@@ -96,7 +94,6 @@ public class HomePresenterImp implements HomePresenter {
                                     view.showError(error.getMessage());
                                 }
                         ));
-        //disposable.dispose();
     }
     @Override
     public void getMealsByCategory(String category, View v) {
@@ -115,7 +112,6 @@ public class HomePresenterImp implements HomePresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
     @Override
     public void getMealsByCountry(String country, View v) {
@@ -134,7 +130,6 @@ public class HomePresenterImp implements HomePresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
     @Override
     public void getMealsByIngredient(String ingredient, View v) {
@@ -153,7 +148,6 @@ public class HomePresenterImp implements HomePresenter {
                                 }
                         )
         );
-        //disposable.dispose();
     }
     @Override
     public void logout(View v) {
@@ -170,11 +164,14 @@ public class HomePresenterImp implements HomePresenter {
                                 }
                         )
         );
-        //disposable.dispose()
         Navigation.findNavController(v).navigate(R.id.action_homeScreenFragment_to_welcomeFragment);
     }
     @Override
     public boolean isGuest() {
         return mealsRepo.isGuest();
+    }
+    @Override
+    public void closeDisposable() {
+        disposable.dispose();
     }
 }

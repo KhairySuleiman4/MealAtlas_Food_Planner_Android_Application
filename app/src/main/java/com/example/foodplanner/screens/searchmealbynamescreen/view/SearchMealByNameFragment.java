@@ -33,20 +33,16 @@ public class SearchMealByNameFragment extends Fragment implements SearchMealByNa
     public SearchMealByNameFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_meal_by_name, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -65,19 +61,21 @@ public class SearchMealByNameFragment extends Fragment implements SearchMealByNa
         rvMeals.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter.observeSearch(etSearch, meals);
     }
-
     @Override
     public void updateSearchResults(Meal[] meals) {
         rvMeals.setAdapter(new MealsAdapter(getContext(), meals, this));
     }
-
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
-
     @Override
-    public void onMealClick(String mealName) {
-        presenter.getMealByName(mealName, requireView());
+    public void onMealClick(long mealId) {
+        presenter.getMealById(mealId, requireView());
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.closeDisposable();
     }
 }

@@ -68,8 +68,8 @@ public class MealsRepositoryImp implements MealsRepository{
         return remote.mealsByIngredient(ingredient);
     }
     @Override
-    public Single<Meal> mealByName(String mealName) {
-        return remote.mealByName(mealName);
+    public Single<Meal> getMealById(long mealId) {
+        return remote.getMealById(mealId);
     }
     @Override
     public Observable<List<Meal>> getFavMeals() {

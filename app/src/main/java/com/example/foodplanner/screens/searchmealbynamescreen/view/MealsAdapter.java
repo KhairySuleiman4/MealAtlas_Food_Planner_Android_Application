@@ -42,7 +42,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsViewHolder> {
         holder.convertedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onMealClick(mealName);
+                listener.onMealClick(meals[i].getIdMeal());
             }
         });
     }
