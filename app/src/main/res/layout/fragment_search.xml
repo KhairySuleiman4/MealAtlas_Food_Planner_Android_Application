@@ -14,16 +14,16 @@
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="32dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="32dp"
+            android:ems="10"
+            android:hint="@string/str_choose_the_filter"
+            android:inputType="text"
             android:paddingHorizontal="8dp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chip_group_filters"
@@ -62,7 +62,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             android:orientation="vertical"
             android:layout_margin="8dp"
             />

@@ -35,8 +35,8 @@ import java.util.Calendar;
 public class MealDetailsFragment extends Fragment implements MealDetailsView{
     MealDetailsPresenterImp presenter;
     ImageView ivMealPhoto;
-    Button btnAddToPlan;
-    Button btnAddToFavorite;
+    ImageView btnAddToPlan;
+    ImageView btnAddToFavorite;
     TextView tvMealTitle;
     TextView tvMealCate;
     TextView tvMealArea;
@@ -50,19 +50,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     public MealDetailsFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_meal_details, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,15 +87,15 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isGuest)
+                if (isGuest) {
                     Toast.makeText(getContext(), "Login First!", Toast.LENGTH_SHORT).show();
-                else if(btnAddToFavorite.getText().toString().equals(getString(R.string.str_add_to_favorite))){
+                } else if (btnAddToFavorite.getTag() == null || btnAddToFavorite.getTag().equals("not_favorite")) {
                     meal.setFavorite(true);
                     meal.setDate("");
                     meal.setUniqueId(0);
                     presenter.insertMeal(meal);
                     mealIsFavorite();
-                } else{
+                } else {
                     presenter.deleteMealFromFavorite(meal);
                     mealIsNotFavorite();
                 }
@@ -228,11 +225,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     }
     @Override
     public void mealIsFavorite() {
-        btnAddToFavorite.setText(getString(R.string.str_remove_from_favorites));
+        btnAddToFavorite.setImageResource(R.drawable.red_heart);
+        btnAddToFavorite.setTag("favorite");
     }
     @Override
     public void mealIsNotFavorite() {
-        btnAddToFavorite.setText(getString(R.string.str_add_to_favorite));
+        btnAddToFavorite.setImageResource(R.drawable.heart);
+        btnAddToFavorite.setTag("not_favorite");
     }
     @Override
     public void showError(String error) {
